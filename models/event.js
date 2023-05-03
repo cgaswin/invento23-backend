@@ -1,48 +1,55 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
 const eventSchema = new mongoose.Schema({
-    name:{
-        type:String,
-        required:[true,"Please provide event name"]
+  name: {
+    type: String,
+    required: [true, "Please provide event name"],
+  },
+  date: {
+    type: Date,
+    required: [true, "Please provide event date"],
+  },
+  regFee: {
+    type: Number,
+    required: [true, "Please provide event registration fees"],
+  },
+  eventType: {
+    type: String,
+    required: [true, "please provide event type eg:Saptha,Proshow,Tech"],
+  },
+  category: {
+    type: String,
+    required: [true, "please provide event category eg:workshop"],
+  },
+  isPreEvent: {
+    type: Boolean,
+    required: [true, "Please provide if the event is a pre event"],
+  },
+  description: {
+    type: String,
+    required: [true, "Please provide event description"],
+  },
+  photo: {
+    id: {
+      type: String,
+      required: true,
     },
-    date:{
-        type:Date,
-        required:[true,"Please enter event date"]
+    secure_url: {
+      type: String,
+      required: true,
     },
-    regFee:{
-        type:Number,
-        required:[true,"Please enter event registration fees"]
-    },
-    eventType:{
-        type:String,
-        required:[true,"please enter event type eg:Saptha,Proshow,Tech"]
-    },
-    category:{
-        type:String,
-        required:[true,"please enter event category eg:workshop"]
-    },
-    isPreEvent:{
-        type:Boolean,
-        required:[true,"Please enter if the event is a pre event"]
-    },
-    description:{
-        type:String,
-        required:[true,"Please enter event description"]
-    },
-    image:{
-        type:String
-    },
-    prize:{
-        type:String,
-        default:"0",
-    },
-    rules:{
-        type:[String],
-        required:[true,"please give event rules"]
-    }
+  },
+  prize: {
+    type: String,
+    default: "0",
+  },
+  rules: {
+    type: [String],
+    required: [true, "please provide event rules"],
+  },
+  ticketsBooked:{
+    type:Number
+  }
+});
 
-
-
-})
-
-module.exports = mongoose.model("events",eventSchema)
+module.exports = mongoose.model("events", eventSchema);
