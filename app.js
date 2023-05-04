@@ -12,9 +12,11 @@ app.use(morgan("tiny"))
 
 //routes
 const campusAmbassador = require("./routes/campusAmbassador")
+const event = require("./routes/event")
 
 
 //router middleware
 app.use("/api/v1",campusAmbassador)
+app.use("/api/v1",event)
 
 module.exports = app
