@@ -49,7 +49,11 @@ const eventSchema = new mongoose.Schema({
   },
   ticketsBooked:{
     type:Number
-  }
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 module.exports = mongoose.model("events", eventSchema);
