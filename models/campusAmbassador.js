@@ -50,4 +50,4 @@ const ambassadorSchema = new mongoose.Schema({
   },
 });
 
-module.export = mongoose.model("campusAmbassadors", ambassadorSchema);
+module.exports = mongoose.model("campusAmbassadors", ambassadorSchema);
