@@ -1,5 +1,6 @@
 const events = require("../models/event")
 const BigPromise = require("../middlewares/bigPromise");
+const cloudinary = require("cloudinary");
 
 exports.getEvents = BigPromise(async (req,res,next) => {
     const {category} = req.query
@@ -15,5 +16,10 @@ exports.getEvents = BigPromise(async (req,res,next) => {
     })
 })
 
+exports.addEvent = BigPromise(async(req,res,next) => {
+    if(!req.files){
+        
+    }
+})
 
 
