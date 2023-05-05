@@ -1,10 +1,10 @@
-const users = require("../models/user")
+const Users = require("../models/user")
 const BigPromise = require("../middlewares/bigPromise");
 
 exports.createUser = BigPromise(async (req,res,next) => {
     const {name,email,refferalCodes,paymentInfo} = req.body
 
-    const user = await users.create({
+    const user = await Users.create({
         name,
         email,
         refferalCodes,
@@ -18,7 +18,7 @@ exports.createUser = BigPromise(async (req,res,next) => {
 })
 
 exports.getUsers = BigPromise(async (req,res,next) => {
-    const users = await users.find({})
+    const users = await Users.find({})
     console.log(users)
     res.status(200).json({
         success:true,
