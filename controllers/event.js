@@ -4,13 +4,18 @@ const cloudinary = require("cloudinary").v2;
 const CustomError = require("../errors/customError");
 
 exports.getEvents = BigPromise(async (req, res, next) => {
-  const { category } = req.query;
-  const queryObject = {};
-  if (category) {
-    queryObject.category = category;
+  const { type,category } = req.query;
+  let queryObject = {}
+  if(type){
+    queryObject.eventType = type
+  }
+  if(category){
+    queryObject.category = category
   }
 
+
   let events = await Events.find(queryObject);
+  console.log(events)
   return res.status(200).json({
     success: true,
     events,
