@@ -9,6 +9,15 @@ const eventSchema = new mongoose.Schema({
     type: Date,
     required: [true, "Please provide event date"],
   },
+  isOnline:{
+    type:Boolean,
+  },
+  contactName:{
+    type:String,
+  },
+  contactNumber:{
+    type:Number,
+  },
   regFee: {
     type: Number,
     required: [true, "Please provide event registration fees"],
