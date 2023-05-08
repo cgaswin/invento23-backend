@@ -22,6 +22,9 @@ const userSchema = new mongoose.Schema({
   college:{
     type:String
   },
+  year:{
+    type:Number
+  },
   isPaymentSuccessful: {
     type: Boolean,
     required: [true, "Please provide if the payment was successful"],
