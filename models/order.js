@@ -28,8 +28,8 @@ const orderSchema = new mongoose.Schema({
     orderEvents:[
         {
             event:{
-                type:mongoose.Schema.objectId,
-                ref:"product",
+                type:mongoose.Schema.ObjectId,
+                ref:"Events",
                 required:true
             }
         }
