@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { captureRazorpayPayment } = require("../controllers/paymentController");
+const { captureRazorPayment } = require("../controllers/paymentController");
 
-router.route("/capturerazorpay").post(captureRazorpayPayment);
+router.route("/capturerazorpay").post(captureRazorPayment);
 
 module.exports = router;
