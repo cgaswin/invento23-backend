@@ -10,7 +10,7 @@ exports.captureRazorPayment = BigPromise(async (req, res, next) => {
   console.log(req.body.amount);
 
   const myOrder = await instance.orders.create({
-    amount: req.body.amount,
+    amount: req.body.amount*100,//converting rupees to paisa
     currency: "INR",
     receipt: uuidv4()
   });
