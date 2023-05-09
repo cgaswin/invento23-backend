@@ -1,3 +1,4 @@
+const Razorpay = require("razorpay");
 const { v4: uuidv4 } = require('uuid');
 const BigPromise = require("../middlewares/bigPromise");
 
