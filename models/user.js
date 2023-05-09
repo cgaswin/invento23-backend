@@ -25,10 +25,6 @@ const userSchema = new mongoose.Schema({
   year:{
     type:Number
   },
-  isPaymentSuccessful: {
-    type: Boolean,
-    required: [true, "Please provide if the payment was successful"],
-  },
   events: {
     type: [String],
     required: [true, "please provide the event list"],
