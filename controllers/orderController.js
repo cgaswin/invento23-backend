@@ -1,9 +1,9 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 const Order = require("../models/order");
 const Events = require("../models/event");
 const campusAmbassador = require("../models/campusAmbassador");
 const Users = require("../models/user");
-const {createUser} = require("../controllers/user")
+const { createUser } = require("../controllers/user");
 const BigPromise = require("../middlewares/bigPromise");
 const CustomError = require("../errors/customError");
 
@@ -39,22 +39,23 @@ exports.createOrder = BigPromise(async (req, res, next) => {
 });
 
 exports.updateOrder = BigPromise(async (req, res, next) => {
-  const order = await Order.findById(mongoose.Types.ObjectId(req.params.id));
+  const order = await Order.findById(
+    new mongoose.Types.ObjectId(req.params.id)
+  );
   if (!order) {
     return next(new CustomError("Please check order id", 401));
   }
 
-  const email = order.email
-  const user = await Users.find({email})
- 
-  if(!user){
-    await createUser(order.name,order.email,order.paymentInfo)
-  }
+  const email = order.email;
+  const user = await Users.find({ email });
 
+  if (!user) {
+    await createUser(order.name, order.email, order.paymentInfo);
+  }
 
   order.orderEvents.forEach(async (event) => {
     await updateEventTicket(event.id);
-    await updateUser(order.email,event.name,order.refferalCode);
+    await updateUser(order.email, event.name, order.refferalCode);
   });
 
   if (order.refferalCode) {
@@ -83,13 +84,13 @@ async function updateCampusAmbassador(refferalCode) {
   await ambassador.save({ validateBeforeSave: false });
 }
 
-async function updateUser(email,eventName,refferalCode){
-    const user = await Users.find({email})
-    if(user){
-        user.events.push(eventName)
-        if(refferalCode && !user.referralCodes.included(refferalCode)){
-            user.referralCodes.push(refferalCode)
-        }
+async function updateUser(email, eventName, refferalCode) {
+  const user = await Users.find({ email });
+  if (user) {
+    user.events.push(eventName);
+    if (refferalCode && !user.referralCodes.included(refferalCode)) {
+      user.referralCodes.push(refferalCode);
     }
-    await user.save({validateBeforeSave:false})
+  }
+  await user.save({ validateBeforeSave: false });
 }
