@@ -78,7 +78,7 @@ async function updateEventTicket(eventId) {
 }
 
 async function updateCampusAmbassador(refferalCode) {
-  const ambassador = await campusAmbassador.findById(refferalCode);
+  const ambassador = await campusAmbassador.findById(new mongoose.Types.ObjectId(refferalCode));
   ambassador.score = ambassador.score + 10;
 
   await ambassador.save({ validateBeforeSave: false });
