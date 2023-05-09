@@ -57,7 +57,8 @@ const eventSchema = new mongoose.Schema({
     required: [true, "please provide event rules"],
   },
   ticketsBooked:{
-    type:Number
+    type:Number,
+    default:0
   },
   createdAt: {
     type: Date,
