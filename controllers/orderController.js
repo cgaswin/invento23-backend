@@ -39,12 +39,13 @@ exports.createOrder = BigPromise(async (req, res, next) => {
 
 exports.updateOrder = BigPromise(async (req, res, next) => {
   const order = await Order.findById(req.params.id);
-  const user = await Users.find({email})
- 
   if (!order) {
     return next(new CustomError("Please check order id", 401));
   }
 
+  const email = order.email
+  const user = await Users.find({email})
+ 
   if(!user){
     await createUser(order.name,order.email,order.paymentInfo)
   }
