@@ -38,7 +38,7 @@ exports.createOrder = BigPromise(async (req, res, next) => {
 });
 
 exports.updateOrder = BigPromise(async (req, res, next) => {
-  const order = await Order.findById(req.params.id);
+  const order = await Order.findById(mongoose.Types.ObjectId(req.params.id));
   if (!order) {
     return next(new CustomError("Please check order id", 401));
   }
