@@ -1,4 +1,3 @@
-const bcrypt = require("bcryptjs");
 const mailHelper = require("../utils/emailHelper");
 const CustomError = require("../errors/customError");
 const Users = require("../models/user");
