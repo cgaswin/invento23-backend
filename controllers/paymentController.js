@@ -1,4 +1,4 @@
-import { nanoid } from "nanoid";
+const { v4: uuidv4 } = require('uuid');
 const BigPromise = require("../middlewares/bigPromise");
 
 exports.captureRazorPayment = BigPromise(async (req, res, next) => {
@@ -12,7 +12,7 @@ exports.captureRazorPayment = BigPromise(async (req, res, next) => {
   const myOrder = await instance.orders.create({
     amount: req.body.amount,
     currency: "INR",
-    receipt: nanoid(),
+    receipt: uuidv4()
   });
 
   res.status(200).json({
