@@ -32,16 +32,20 @@ exports.createOrder = BigPromise(async (req, res, next) => {
     totalAmount,
   });
 
+  const id = await order.id
+  if(id){
+    updateOrder(id)
+  }
+
   res.status(200).json({
     success: true,
     order,
   });
 });
 
-exports.updateOrder = BigPromise(async (req, res, next) => {
-  const order = await Order.findById(
-    new mongoose.Types.ObjectId(req.params.id)
-  );
+
+async function updateOrder(id){
+  const order = await Order.findById(id);
   if (!order) {
     return next(new CustomError("Please check order id", 401));
   }
@@ -63,12 +67,7 @@ exports.updateOrder = BigPromise(async (req, res, next) => {
   }
 
   await order.save();
-
-  res.status(200).json({
-    success: true,
-    order,
-  });
-});
+}
 
 async function updateEventTicket(eventId) {
   const event = await Events.findById(eventId);
@@ -78,7 +77,7 @@ async function updateEventTicket(eventId) {
 }
 
 async function updateCampusAmbassador(refferalCode) {
-  const ambassador = await campusAmbassador.findById(new mongoose.Types.ObjectId(refferalCode));
+  const ambassador = await campusAmbassador.findById(refferalCode);
   ambassador.score = ambassador.score + 10;
 
   await ambassador.save({ validateBeforeSave: false });
