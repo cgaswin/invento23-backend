@@ -28,12 +28,14 @@ app.use(
 //routes
 const campusAmbassador = require("./routes/campusAmbassador")
 const event = require("./routes/event")
-const payment = require("./routes/payment");
+const payment = require("./routes/payment")
+const order = require("./routes/order")
 
 
 //router middleware
 app.use("/api/v1",campusAmbassador)
 app.use("/api/v1",event)
-app.use("/api/v1", payment);
+app.use("/api/v1", payment)
+app.use("/api/v1",order)
 
 module.exports = app

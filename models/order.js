@@ -42,11 +42,6 @@ const orderSchema = new mongoose.Schema({
     totalAmount:{
         type:Number
     },
-    orderStatus:{
-        type:String,
-        required:true,
-        default:"processing"
-    },
     createdAt:{
         type:Date,
         default:Date.now()

@@ -33,3 +33,21 @@ exports.createOrder = BigPromise(async (req,res,next)=>{
     })
 
 })
+
+exports.updateOrder = BigPromise(async (req,res,next)=>{
+    const order = await Order.findById(req.params.id)
+    
+    order.orderEvents.forEach(async(event)=>{
+        await updateEventTicket(event.id)
+    })
+    
+
+})
+
+async function updateEventTicket(eventId){
+    const event = await Events.findById(eventId)
+
+    event.ticketsBooked = event.ticketsBooked+1
+
+    await event.save({validateBeforeSave:false})
+}
