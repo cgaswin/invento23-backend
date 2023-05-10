@@ -48,13 +48,27 @@ const eventSchema = new mongoose.Schema({
       required: true,
     },
   },
-  prize: {
+  prizeMoney: {
     type: String,
     default: "0",
   },
   rules: {
     type: [String],
     required: [true, "please provide event rules"],
+  },
+  prize:{
+    first:{
+      type:String,
+      default:""
+    },
+    second:{
+      type:String,
+      default:""
+    },
+    third:{
+      type:String,
+      default:""
+    },
   },
   ticketsBooked:{
     type:Number,
