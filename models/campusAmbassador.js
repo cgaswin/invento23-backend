@@ -37,7 +37,7 @@ const ambassadorSchema = new mongoose.Schema({
     unique: true,
   },
   previousExperience: {
-    type: Boolean,
+    type: String,
     required: [true, "please provide previous experience"],
   },
   referralCode: {
