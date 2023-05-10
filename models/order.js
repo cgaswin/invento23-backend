@@ -36,11 +36,13 @@ const orderSchema = new mongoose.Schema({
     ],
     paymentInfo:{
         id:{
-            type:String
+            type:String,
+            required:[true,"please provide payment id"]
         }
     },
     totalAmount:{
-        type:Number
+        type:Number,
+        required:[true,"please provide the total amount"]
     },
     createdAt:{
         type:Date,
