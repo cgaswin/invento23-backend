@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const Order = require("../models/order");
 const Events = require("../models/event");
 const campusAmbassador = require("../models/campusAmbassador");
@@ -32,10 +31,10 @@ exports.createOrder = BigPromise(async (req, res, next) => {
     totalAmount,
   });
 
-  const id = await order.id
+  const id = await order.id;
 
-  if(id){
-    updateOrder(id)
+  if (id) {
+    updateOrder(id);
   }
 
   res.status(200).json({
@@ -44,8 +43,16 @@ exports.createOrder = BigPromise(async (req, res, next) => {
   });
 });
 
+exports.getAllOrders = BigPromise(async (req, res, next) => {
+  let orders = await Order.find();
+  console.log(orders);
+  res.status(200).json({
+    success: true,
+    orders,
+  });
+});
 
-async function updateOrder(id){
+async function updateOrder(id) {
   const order = await Order.findById(id);
   if (!order) {
     return next(new CustomError("Please check order id", 401));
