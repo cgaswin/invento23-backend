@@ -22,6 +22,15 @@ exports.getEvents = BigPromise(async (req, res, next) => {
   });
 });
 
+exports.getOneEvent = BigPromise(async (req,res,next)=>{
+  const id = req.params.id
+  let event = await Events.findById(id)
+  res.status(200).json({
+    success:true,
+    event
+  })
+})
+
 exports.addEvent = BigPromise(async (req, res, next) => {
 
   if (!req.files) {
