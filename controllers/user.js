@@ -2,23 +2,29 @@ const mailHelper = require("../utils/emailHelper");
 const CustomError = require("../errors/customError");
 const Users = require("../models/user");
 const BigPromise = require("../middlewares/bigPromise");
+const Events = require("../models/event");
 
 exports.createUser = BigPromise(
-  async (name, email, phone, referalCode, college, year, orderEvents) => {
-
-
-    console.log(name, email, phone, referalCode, college, year, orderEvents)
-    const referalCodes = []
+  async (order) => {
+    const {name,email,phone,referalCode,college,year,orderEvents} = order
+    let events = []
     const userObj = {
       name,
       email,
       phone,
-      orderEvents,
     };
 
+    for(const event of orderEvents){
+      const id = event.event
+      const singleEvent = await Events.findById(id)
+
+      events.push(singleEvent.name)
+    }
+
+    userObj.events = events
+
     if (referalCode) {
-      referalCodes.push(referalCode)
-      userObj.referalCodes = referalCode
+      userObj.referalCodes = [referalCode];
     }
 
     if (college) {
@@ -29,7 +35,6 @@ exports.createUser = BigPromise(
       userObj.year = year;
     }
 
-    console.log(userObj)
 
     const user = await Users.create(userObj);
 

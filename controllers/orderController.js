@@ -54,24 +54,18 @@ exports.getAllOrders = BigPromise(async (req, res, next) => {
 
 async function updateOrder(id) {
   const order = await Order.findById(id);
-  const email = order.email
+  const email = order.email;
 
   if (!order) {
-    return next(new CustomError("Please check order id", 401));
+    return new CustomError("Please check order id", 401);
   }
+
+  console.log(order);
 
   const user = await Users.findOne({ email });
 
   if (!user) {
-    await createUser(
-      order.name,
-      order.email,
-      order.phone,
-      order.referalCode,
-      order.college,
-      order.year,
-      order.orderEvents
-    );
+    await createUser(order);
   }
 
   for (const event of order.orderEvents) {
@@ -87,10 +81,10 @@ async function updateOrder(id) {
 }
 
 async function updateEventTicket(eventId) {
-  console.log("inside event function")
+  console.log("inside event function");
   const event = await Events.findById(eventId);
-  if(!event){
-    return next(new CustomError("No event with this id exists",401))
+  if (!event) {
+    return new CustomError("No event with this id exists", 401);
   }
   event.ticketsBooked = event.ticketsBooked + 1;
 
@@ -98,7 +92,7 @@ async function updateEventTicket(eventId) {
 }
 
 async function updateCampusAmbassador(referalCode) {
-  console.log("inside campus function")
+  console.log("inside campus function");
   const ambassador = await campusAmbassador.findById(referalCode);
   ambassador.score = ambassador.score + 10;
 
@@ -106,7 +100,7 @@ async function updateCampusAmbassador(referalCode) {
 }
 
 async function updateUser(email, eventName, referalCode) {
-  console.log("inside user section")
+  console.log("inside user section");
   const user = await Users.findOne({ email });
   if (user) {
     user.events.push(eventName);
