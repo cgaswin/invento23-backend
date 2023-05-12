@@ -54,8 +54,9 @@ exports.getAllOrders = BigPromise(async (req, res, next) => {
 
 async function updateOrder(id) {
   const order = await Order.findById(id);
+  const email = order.email
   console.log("the order from db is ",order)
-  
+
   if (!order) {
     return next(new CustomError("Please check order id", 401));
   }
