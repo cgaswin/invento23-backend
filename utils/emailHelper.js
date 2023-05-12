@@ -2,6 +2,8 @@ const nodemailer = require("nodemailer")
 
 const mailHelper = async(option) => {
 
+  const events = option.orderEvents
+
     var transporter = nodemailer.createTransport({
         host: process.env.NODEMAILER_HOST,
         port: process.env.NODEMAILER_HOST_PORT,

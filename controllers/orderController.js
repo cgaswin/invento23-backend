@@ -64,7 +64,7 @@ async function updateOrder(id) {
   const user = await Users.findOne({ email });
 
   if (!user) {
-    await createUser(order.name, order.email, order.paymentInfo);
+    await createUser(order.name, order.email,order.phone,order.referralCode,order.college,order.year,order.orderEvents,);
   }
 
   for (const event of order.orderEvents) {

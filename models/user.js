@@ -20,10 +20,12 @@ const userSchema = new mongoose.Schema({
     type: [String],
   },
   college:{
-    type:String
+    type:String,
+    default:""
   },
   year:{
-    type:Number
+    type:Number,
+    default:0
   },
   events: {
     type: [String],

@@ -3,25 +3,43 @@ const CustomError = require("../errors/customError");
 const Users = require("../models/user");
 const BigPromise = require("../middlewares/bigPromise");
 
-exports.createUser = BigPromise(async (name, email, paymentInfo) => {
-  const user = await Users.create({
-    name,
-    email,
-    paymentInfo
-  });
-
-  try {
-    await mailHelper({
+exports.createUser = BigPromise(
+  async (name, email, phone, referralCode, college, year, orderEvents) => {
+    const userObj = {
+      name,
       email,
-      subject: "Welcome to Invento23",
-    });
-  } catch (error) {
-    console.log(error);
-    throw new CustomError(error.message, 500);
-  }
+      phone,
+      orderEvents,
+    };
 
-  return user;
-});
+    if (referralCode) {
+      userObj.referralCode = referralCode;
+    }
+
+    if (college) {
+      userObj.college = college;
+    }
+
+    if (year) {
+      userObj.year = year;
+    }
+
+    const user = await Users.create(userObj);
+
+    try {
+      await mailHelper({
+        email:user.email,
+        subject: "Welcome to Invento23",
+        events:user.orderEvents
+      });
+    } catch (error) {
+      console.log(error);
+      throw new CustomError(error.message, 500);
+    }
+
+    return user;
+  }
+);
 
 exports.getUsers = BigPromise(async (req, res, next) => {
   const users = await Users.find({});
