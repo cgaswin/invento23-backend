@@ -4,35 +4,33 @@ const cloudinary = require("cloudinary").v2;
 const CustomError = require("../errors/customError");
 
 exports.getEvents = BigPromise(async (req, res, next) => {
-  const { type,category } = req.query;
-  let queryObject = {}
-  if(type){
-    queryObject.eventType = type
+  const { type, category } = req.query;
+  let queryObject = {};
+  if (type) {
+    queryObject.eventType = type;
   }
-  if(category){
-    queryObject.category = category
+  if (category) {
+    queryObject.category = category;
   }
-
 
   let events = await Events.find(queryObject);
-  console.log(events)
+  console.log(events);
   return res.status(200).json({
     success: true,
     events,
   });
 });
 
-exports.getOneEvent = BigPromise(async (req,res,next)=>{
-  const id = req.params.id
-  let event = await Events.findById(id)
+exports.getOneEvent = BigPromise(async (req, res, next) => {
+  const id = req.params.id;
+  let event = await Events.findById(id);
   res.status(200).json({
-    success:true,
-    event
-  })
-})
+    success: true,
+    event,
+  });
+});
 
 exports.addEvent = BigPromise(async (req, res, next) => {
-
   if (!req.files) {
     return next(new CustomError("image is required", 400));
   }
@@ -49,16 +47,23 @@ exports.addEvent = BigPromise(async (req, res, next) => {
     rules,
   } = req.body;
 
-  
-
   let file = req.files.photo;
 
-  if(!name|| !date || !regFee || !eventType || !category || !isPreEvent || !description || !prize || !rules){
-      return next(new CustomError("all fields are mandatory",400))
+  if (
+    !name ||
+    !date ||
+    !regFee ||
+    !eventType ||
+    !category ||
+    !isPreEvent ||
+    !description ||
+    !prize ||
+    !rules
+  ) {
+    return next(new CustomError("all fields are mandatory", 400));
   }
 
-  let rulesArray = rules.split(",")
-
+  let rulesArray = rules.split(",");
 
   const result = await cloudinary.uploader.upload(file.tempFilePath, {
     folder: "invento23",
@@ -73,34 +78,31 @@ exports.addEvent = BigPromise(async (req, res, next) => {
     isPreEvent,
     description,
     photo: {
-        id: result.public_id,
-        secure_url: result.secure_url,
-      },
+      id: result.public_id,
+      secure_url: result.secure_url,
+    },
     prize,
-    rules:rulesArray
+    rules: rulesArray,
   });
-
 });
 
-exports.updateEventPrize = BigPromise(async (req,res,next)=>{
-    const {id,first,second,third} = req.body
-    let event = await Events.findById(id)
+exports.updateEventPrize = BigPromise(async (req, res, next) => {
+  const { id, first, second, third } = req.body;
+  let event = await Events.findById(id);
 
-    if(!event){
-      return next(new CustomError("No event found with this id",401))
-    }
+  if (!event) {
+    return next(new CustomError("No event found with this id", 401));
+  }
 
-    event.prizes.first = first;
-    event.prizes.second = second;
-    event.prizes.third = third;
+  event.prize.first = first;
+  event.prize.second = second;
+  event.prize.third = third;
 
-    await event.save({validateBeforeSave:false})
+  await event.save({ validateBeforeSave: false });
 
-    res.status(200).json({
-      success:true,
-      message:"Event prizes updated successfully",
-      event
-    })
-
-
-})
+  res.status(200).json({
+    success: true,
+    message: "Event prizes updated successfully",
+    event,
+  });
+});
