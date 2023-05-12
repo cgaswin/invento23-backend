@@ -5,6 +5,7 @@ const Users = require("../models/user");
 const { createUser } = require("../controllers/user");
 const BigPromise = require("../middlewares/bigPromise");
 const CustomError = require("../errors/customError");
+const mailHelper = require("../utils/emailHelper")
 
 exports.createOrder = BigPromise(async (req, res, next) => {
   const {
@@ -71,7 +72,7 @@ async function updateOrder(id) {
     const singleEvent = await Events.findById(id);
     await updateEventTicket(id);
     await updateUser(order.email, singleEvent.name, order.referalCode);
-    await sendMail(order.name, order.email, singleEvent.name,event.date);
+    await mailHelper(order,singleEvent);
   }
 
   if (order.referalCode) {
