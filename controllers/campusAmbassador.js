@@ -13,7 +13,7 @@ exports.createCampusAmbassador = BigPromise(async (req,res,next)=>{
     contact,
     email,
     previousExperience,
-    referralCode,
+    referalCode,
   } = req.body
 
   const ambassador = await campusAmbassadors.create({
@@ -26,7 +26,7 @@ exports.createCampusAmbassador = BigPromise(async (req,res,next)=>{
     contact,
     email,
     previousExperience,
-    referralCode,
+    referalCode,
   })
 
   res.status(200).json({

@@ -1,6 +1,6 @@
 const Order = require("../models/order");
 const Events = require("../models/event");
-const campusAmbassador = require("../models/campusAmbassador");
+const campusAmbassadors = require("../models/campusAmbassador");
 const Users = require("../models/user");
 const { createUser } = require("../controllers/user");
 const BigPromise = require("../middlewares/bigPromise");
@@ -60,7 +60,6 @@ async function updateOrder(id) {
     return new CustomError("Please check order id", 401);
   }
 
-  console.log(order);
 
   const user = await Users.findOne({ email });
 
@@ -69,8 +68,10 @@ async function updateOrder(id) {
   }
 
   for (const event of order.orderEvents) {
-    await updateEventTicket(event.id);
-    await updateUser(order.email, event.name, order.referalCode);
+    const id = event.event
+    const singleEvent = await Events.findById(id)
+    await updateEventTicket(id);
+    await updateUser(order.email, singleEvent.name, order.referalCode);
   }
 
   if (order.referalCode) {
@@ -81,26 +82,32 @@ async function updateOrder(id) {
 }
 
 async function updateEventTicket(eventId) {
-  console.log("inside event function");
-  const event = await Events.findById(eventId);
-  if (!event) {
-    return new CustomError("No event with this id exists", 401);
-  }
-  event.ticketsBooked = event.ticketsBooked + 1;
 
-  await event.save({ validateBeforeSave: false });
+  try {
+    const event = await Events.findById(eventId);
+    event.ticketsBooked = event.ticketsBooked + 1;
+    await event.save({ validateBeforeSave: false });
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 async function updateCampusAmbassador(referalCode) {
-  console.log("inside campus function");
-  const ambassador = await campusAmbassador.findById(referalCode);
-  ambassador.score = ambassador.score + 10;
-
-  await ambassador.save({ validateBeforeSave: false });
+  console.log(referalCode)
+  try {
+    const ambassador = await campusAmbassadors.findOne({referalCode});
+    console.log(ambassador)
+    if(!ambassador){
+      throw new CustomError("no ambassador found",401)
+    }
+    ambassador.score = ambassador.score + 10;
+    await ambassador.save({ validateBeforeSave: false });
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 async function updateUser(email, eventName, referalCode) {
-  console.log("inside user section");
   const user = await Users.findOne({ email });
   if (user) {
     user.events.push(eventName);

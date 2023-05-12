@@ -21,6 +21,8 @@ exports.createUser = BigPromise(
       events.push(singleEvent.name)
     }
 
+    console.log(events)
+
     userObj.events = events
 
     if (referalCode) {

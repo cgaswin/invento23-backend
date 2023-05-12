@@ -40,7 +40,7 @@ const ambassadorSchema = new mongoose.Schema({
     type: String,
     required: [true, "please provide previous experience"],
   },
-  referralCode: {
+  referalCode: {
     type: String,
     required: [true, "please provide referral code"],
   },
