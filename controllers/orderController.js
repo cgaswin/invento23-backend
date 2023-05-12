@@ -31,9 +31,10 @@ exports.createOrder = BigPromise(async (req, res, next) => {
     totalAmount,
   });
 
-  const id = await order.id;
-
+  const id = order._id;
+  console.log(id)
   if (id) {
+    console.log("got the id")
     updateOrder(id);
   }
 
@@ -54,21 +55,22 @@ exports.getAllOrders = BigPromise(async (req, res, next) => {
 
 async function updateOrder(id) {
   const order = await Order.findById(id);
+  console.log(order)
   if (!order) {
     return next(new CustomError("Please check order id", 401));
   }
 
   const email = order.email;
-  const user = await Users.find({ email });
+  const user = await Users.findOne({ email });
 
   if (!user) {
     await createUser(order.name, order.email, order.paymentInfo);
   }
 
-  order.orderEvents.forEach(async (event) => {
+  for (const event of order.orderEvents) {
     await updateEventTicket(event.id);
     await updateUser(order.email, event.name, order.refferalCode);
-  });
+  }
 
   if (order.refferalCode) {
     await updateCampusAmbassador(order.refferalCode);
@@ -92,12 +94,12 @@ async function updateCampusAmbassador(refferalCode) {
 }
 
 async function updateUser(email, eventName, refferalCode) {
-  const user = await Users.find({ email });
-  if (user) {
-    user.events.push(eventName);
-    if (refferalCode && !user.referralCodes.included(refferalCode)) {
-      user.referralCodes.push(refferalCode);
-    }
-  }
-  await user.save({ validateBeforeSave: false });
+   const user = await Users.findOne({ email });
+   if (user) {
+     user.events.push(eventName);
+     if (refferalCode && !user.referralCodes.includes(refferalCode)) {
+       user.referralCodes.push(refferalCode);
+     }
+     await user.save({ validateBeforeSave: false });
+   }
 }
