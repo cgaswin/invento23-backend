@@ -38,6 +38,9 @@ exports.addEvent = BigPromise(async (req, res, next) => {
   const {
     name,
     date,
+    isOnline,
+    contactName,
+    contactNumber,
     regFee,
     eventType,
     category,
@@ -53,6 +56,9 @@ exports.addEvent = BigPromise(async (req, res, next) => {
     !name ||
     !date ||
     !regFee ||
+    !isOnline ||
+    !contactName ||
+    !contactNumber ||
     !eventType ||
     !category ||
     !isPreEvent ||
@@ -72,6 +78,9 @@ exports.addEvent = BigPromise(async (req, res, next) => {
   const event = await Events.create({
     name,
     date,
+    isOnline,
+    contactName,
+    contactNumber,
     regFee,
     eventType,
     category,

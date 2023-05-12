@@ -1,5 +1,3 @@
-const mailHelper = require("../utils/emailHelper");
-const CustomError = require("../errors/customError");
 const Users = require("../models/user");
 const BigPromise = require("../middlewares/bigPromise");
 const Events = require("../models/event");
@@ -35,19 +33,9 @@ exports.createUser = BigPromise(
       userObj.year = year;
     }
 
-
     const user = await Users.create(userObj);
 
-    // try {
-    //   await mailHelper({
-    //     email:user.email,
-    //     subject: "Welcome to Invento23",
-    //   });
-    // } catch (error) {
-    //   console.log(error);
-    //   throw new CustomError(error.message, 500);
-    // }
-
+   
     return user;
   }
 );
