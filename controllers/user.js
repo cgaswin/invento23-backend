@@ -17,11 +17,9 @@ exports.createUser = BigPromise(
     for(const event of orderEvents){
       const id = event.event
       const singleEvent = await Events.findById(id)
-
       events.push(singleEvent.name)
     }
 
-    console.log(events)
 
     userObj.events = events
 

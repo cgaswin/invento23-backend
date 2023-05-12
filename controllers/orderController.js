@@ -93,10 +93,8 @@ async function updateEventTicket(eventId) {
 }
 
 async function updateCampusAmbassador(referalCode) {
-  console.log(referalCode)
   try {
     const ambassador = await campusAmbassadors.findOne({referalCode});
-    console.log(ambassador)
     if(!ambassador){
       throw new CustomError("no ambassador found",401)
     }
