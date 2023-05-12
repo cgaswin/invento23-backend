@@ -11,7 +11,7 @@ exports.createOrder = BigPromise(async (req, res, next) => {
     name,
     email,
     phone,
-    refferalCode,
+    referalCode,
     college,
     year,
     orderEvents,
@@ -23,7 +23,7 @@ exports.createOrder = BigPromise(async (req, res, next) => {
     name,
     email,
     phone,
-    refferalCode,
+    referalCode,
     college,
     year,
     orderEvents,
@@ -67,7 +67,7 @@ async function updateOrder(id) {
       order.name,
       order.email,
       order.phone,
-      order.refferalCode,
+      order.referalCode,
       order.college,
       order.year,
       order.orderEvents
@@ -76,11 +76,11 @@ async function updateOrder(id) {
 
   for (const event of order.orderEvents) {
     await updateEventTicket(event.id);
-    await updateUser(order.email, event.name, order.refferalCode);
+    await updateUser(order.email, event.name, order.referalCode);
   }
 
-  if (order.refferalCode) {
-    await updateCampusAmbassador(order.refferalCode);
+  if (order.referalCode) {
+    await updateCampusAmbassador(order.referalCode);
   }
 
   await order.save();
@@ -89,26 +89,29 @@ async function updateOrder(id) {
 async function updateEventTicket(eventId) {
   console.log("inside event function")
   const event = await Events.findById(eventId);
+  if(!event){
+    return next(new CustomError("No event with this id exists",401))
+  }
   event.ticketsBooked = event.ticketsBooked + 1;
 
   await event.save({ validateBeforeSave: false });
 }
 
-async function updateCampusAmbassador(refferalCode) {
+async function updateCampusAmbassador(referalCode) {
   console.log("inside campus function")
-  const ambassador = await campusAmbassador.findById(refferalCode);
+  const ambassador = await campusAmbassador.findById(referalCode);
   ambassador.score = ambassador.score + 10;
 
   await ambassador.save({ validateBeforeSave: false });
 }
 
-async function updateUser(email, eventName, refferalCode) {
+async function updateUser(email, eventName, referalCode) {
   console.log("inside user section")
   const user = await Users.findOne({ email });
   if (user) {
     user.events.push(eventName);
-    if (refferalCode && !user.referralCodes.includes(refferalCode)) {
-      user.referralCodes.push(refferalCode);
+    if (referalCode && !user.referalCodes.includes(referalCode)) {
+      user.referalCodes.push(referalCode);
     }
     await user.save({ validateBeforeSave: false });
   }

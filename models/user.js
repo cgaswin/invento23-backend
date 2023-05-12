@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
     type: Number,
     required: [true, "please provide contact number"],
   },
-  referralCodes: {
+  referalCodes: {
     type: [String],
   },
   college:{

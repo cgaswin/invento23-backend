@@ -4,11 +4,11 @@ const Users = require("../models/user");
 const BigPromise = require("../middlewares/bigPromise");
 
 exports.createUser = BigPromise(
-  async (name, email, phone, refferalCode, college, year, orderEvents) => {
+  async (name, email, phone, referalCode, college, year, orderEvents) => {
 
 
-    console.log(name, email, phone, refferalCode, college, year, orderEvents)
-    const refferalCodes = []
+    console.log(name, email, phone, referalCode, college, year, orderEvents)
+    const referalCodes = []
     const userObj = {
       name,
       email,
@@ -16,9 +16,9 @@ exports.createUser = BigPromise(
       orderEvents,
     };
 
-    if (refferalCode) {
-      refferalCodes.push(refferalCode)
-      userObj.refferalCodes = refferalCodes
+    if (referalCode) {
+      referalCodes.push(referalCode)
+      userObj.referalCodes = referalCode
     }
 
     if (college) {
