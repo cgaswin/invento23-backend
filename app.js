@@ -29,6 +29,10 @@ app.use(
   app.get("/api/v1/newevent", (req, res) => {
     res.render("eventcreate");
   });
+
+  app.get("/api/v1/updateevent",(req,res)=>{
+    res.render("updateEvent")
+  })
   
 
 //routes
