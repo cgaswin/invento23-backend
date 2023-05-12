@@ -5,6 +5,7 @@ const BigPromise = require("../middlewares/bigPromise");
 
 exports.createUser = BigPromise(
   async (name, email, phone, referralCode, college, year, orderEvents) => {
+    const referralCodes = []
     const userObj = {
       name,
       email,
@@ -13,7 +14,8 @@ exports.createUser = BigPromise(
     };
 
     if (referralCode) {
-      userObj.referralCode = referralCode;
+      referralCodes.push(refferalCode)
+      userObj.referralCodes = referralCodes
     }
 
     if (college) {
@@ -24,13 +26,14 @@ exports.createUser = BigPromise(
       userObj.year = year;
     }
 
+    console.log(userObj)
+
     const user = await Users.create(userObj);
 
     try {
       await mailHelper({
         email:user.email,
         subject: "Welcome to Invento23",
-        events:user.orderEvents
       });
     } catch (error) {
       console.log(error);
