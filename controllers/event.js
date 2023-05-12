@@ -84,6 +84,11 @@ exports.addEvent = BigPromise(async (req, res, next) => {
     prize,
     rules: rulesArray,
   });
+
+  res.status(200).json({
+    success:true,
+    event
+  })
 });
 
 exports.updateEventPrize = BigPromise(async (req, res, next) => {
