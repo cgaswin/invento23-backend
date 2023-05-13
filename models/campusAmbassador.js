@@ -23,7 +23,7 @@ const ambassadorSchema = new mongoose.Schema({
     required: [true, "please provide college Type"],
   },
   yearOfStudy: {
-    type: Number,
+    type: String,
     required: [true, "please provide year of study"],
   },
   contact: {
