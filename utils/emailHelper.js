@@ -42,7 +42,7 @@ const dateString = date.toLocaleDateString('en-US', options)
     }
 
     sgMail
-    .send(msg)
+    .send(message)
     .then(() => {
       console.log('Email sent')
     })
