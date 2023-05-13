@@ -15,7 +15,13 @@ exports.createUser = BigPromise(
     for(const event of orderEvents){
       const id = event.event
       const singleEvent = await Events.findById(id)
-      events.push(singleEvent.name)
+      console.log("pushing to events",singleEvent.name)
+
+      if (!events.includes(singleEvent.name)) {
+        events.push(singleEvent.name);
+      }
+
+      console.log("pushing to events completed",events)
     }
 
 
@@ -41,7 +47,7 @@ exports.createUser = BigPromise(
 );
 
 exports.getUsers = BigPromise(async (req, res, next) => {
-  const users = await Users.find({});
+  const users = await Users.find();
   console.log(users);
   res.status(200).json({
     success: true,
