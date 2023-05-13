@@ -14,6 +14,8 @@ const options = { month: 'long', day: 'numeric' }
 const dateString = date.toLocaleDateString('en-US', options)
 
   const transporter = nodemailer.createTransport({
+    port: 465,
+    host: "smtp.gmail.com",
     service: "gmail",
     auth: {
       user: process.env.EMAIL,
