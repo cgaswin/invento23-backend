@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="IE=edge"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Days+One&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Template</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        line-height: 1.5;
+        font-family: "Poppins", sans-serif;
+      }
+
+      img,
+      picture,
+      video,
+      canvas,
+      svg {
+        display: block;
+        max-width: 100%;
+      }
+
+      p,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        overflow-wrap: break-word;
+      }
+
+      .hero {
+        display: grid;
+        width: 100%;
+        background-image: url(./hero.png);
+        background-size: cover;
+        background-position: center;
+        min-height: 40vh;
+      }
+
+      .hero h1 {
+        text-transform: uppercase;
+        color: #fff;
+        font-size: 3rem;
+        font-weight: 400;
+      }
+
+      .hero__text {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+      }
+
+      main {
+        background-image: url(./logo-partial.svg);
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: bottom left;
+      }
+
+      .main-content {
+        margin-top: 3.6rem;
+        font-family: "Poppins";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 1.2rem;
+        padding-inline: 1rem;
+        max-width: 37rem;
+        margin-inline: auto;
+      }
+
+      .main-content > * + * {
+        margin-top: 1.5rem;
+      }
+
+      .about {
+        margin-top: 3.8rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        flex-direction: column;
+        color: hsla(0, 0%, 43%, 1);
+        text-align: center;
+        margin-bottom: 5.3rem;
+      }
+
+      .socials {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .socials img {
+        width: 2rem;
+        height: 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hero">
+      <div class="hero__text">
+        <div class="icon-wrap">
+         <img src="https://res.cloudinary.com/dgfoublaa/image/upload/v1683953180/inventoMail/hero_xovx1e.png"/>
+        </div>
+        <h1>Invento'23</h1>
+      </div>
+    </div>
+
+    <!--
+      logo partial: https://res.cloudinary.com/dgfoublaa/image/upload/v1683953179/inventoMail/logo-partial_p37ttv.svg
+
+      logo: https://res.cloudinary.com/dgfoublaa/image/upload/v1683953179/inventoMail/logo_chfdcp.svg
+    -->
+
+    <main>
+      <section class="main-content">
+        <p>Dear {name},</p>
+        <p>
+          We are pleased to inform you that your registration for the {eventName} workshop, a pre-event of the upcoming tech fest INVENTO'23
+          of Government Engineering College Palakkad, has been successfully
+          verified. We appreciate your interest in this event and look forward
+          to welcoming you to the workshop.
+        </p>
+        <p>
+          The workshop is scheduled in online mode for {date} at {time}, and
+          we have designed it to equip you with valuable skills and knowledge on
+          {{a line on workshop}}
+        </p>
+        <p>
+          The workshop link will be shared with you via email a few days before
+          the event. Please make sure to check your inbox and spam folder to
+          ensure you receive the link. It is essential to have a stable internet
+          connection and a device with audio capabilities to participate fully
+          in the workshop.
+        </p>
+        <p>
+          Should you have any questions or concerns regarding the workshop,
+          please do not hesitate to contact us at {{Contact Name - number}}. We
+          are committed to supporting you and ensuring that you have a
+          fulfilling and enriching experience at the workshop.
+        </p>
+        <p>
+          Thank you for registering for the workshop, and we look forward to
+          seeing you there.
+        </p>
+        <p>Best regards,</p>
+        <p>
+          Team INVENTO’23 <br />
+          Government Engineering College Palakkad
+        </p>
+      </section>
+
+      <section class="about">
+        <div>
+          <p>Invento'23&copy;</p>
+          <address>
+            Government Engineering College,<br />
+            Sreekrishnapuram, Palakkad, Kerala -678633
+          </address>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
