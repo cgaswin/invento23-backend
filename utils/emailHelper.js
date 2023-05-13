@@ -1,11 +1,10 @@
-const nodemailer = require("nodemailer")
+const sgMail = require("@sendgrid/mail")
 const fs = require("fs").promises
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 const mailHelper = async (order, event) => {
   console.log("inside mail helper")
-  console.log(order)
-  console.log("----")
-  console.log(event)
   const { email, name } = order
   const { name: eventName, category, date } = event //TODO:also add contact name and number
 
@@ -13,15 +12,6 @@ const mailHelper = async (order, event) => {
 const options = { month: 'long', day: 'numeric' }
 const dateString = date.toLocaleDateString('en-US', options)
 
-  const transporter = nodemailer.createTransport({
-    port: 465,
-    host: "smtp.gmail.com",
-    service: "gmail",
-    auth: {
-      user: process.env.EMAIL,
-      pass: process.env.PASSWORD,
-    },
-  })
 
   let html
   try {
@@ -42,15 +32,15 @@ const dateString = date.toLocaleDateString('en-US', options)
 
     // Send email with the modified HTML template
     const message = {
-      from: process.env.EMAIL,
       to: email,
+      from: process.env.EMAIL,
       subject: `Confirmation of Registration: ${eventName} at INVENTO'23 - ${dateString} - Government Engineering College Palakkad`,
       html: messageHtml,
     }
 
     try {
       console.log("sending message")
-      await transporter.sendMail(message)
+      await sgMail.send(message)
       console.log("Message sent successfully")
       return "message sent"
     } catch (error) {
