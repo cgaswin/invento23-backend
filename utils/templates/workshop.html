@@ -64,7 +64,7 @@
       .hero {
         display: grid;
         width: 100%;
-        background-image: url(./hero.png);
+        background: url(https://cdn.upload.systems/uploads/gOaAU3bc.png), #000;
         background-size: cover;
         background-position: center;
         min-height: 40vh;
@@ -75,6 +75,14 @@
         color: #fff;
         font-size: 3rem;
         font-weight: 400;
+        position: relative;
+      }
+
+      .hero .blur {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.2);
+        filter: blur(67px);
       }
 
       .hero__text {
@@ -87,7 +95,8 @@
       }
 
       main {
-        background-image: url(./logo-partial.svg);
+        /* background-image: url(./logo-partial.svg); */
+        background-image: url(https://res.cloudinary.com/dgfoublaa/image/upload/v1683953179/inventoMail/logo-partial_p37ttv.svg);
         background-size: contain;
         background-repeat: no-repeat;
         background-position: bottom left;
@@ -135,8 +144,43 @@
     <div class="hero">
       <div class="hero__text">
         <div class="icon-wrap">
-         <img src="https://res.cloudinary.com/dgfoublaa/image/upload/v1683953180/inventoMail/hero_xovx1e.png"/>
+          <!-- <img
+            src="https://res.cloudinary.com/dgfoublaa/image/upload/v1683953180/inventoMail/hero_xovx1e.png"
+          /> -->
+          <svg
+            width="32"
+            height="40"
+            viewBox="0 0 32 40"
+            fill="none"
+            xmlns:xlink="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M6.77558 0.0712891H1V4.99792H6.96853L11.5864 9.91168H20.6293L25.2729 4.99792H31.2414V0.0712891H25.2729L20.3334 4.99792H11.908L6.77558 0.0712891Z"
+              fill="white"
+              stroke="#1D1A21"
+              stroke-width="0.11025"
+            />
+            <path
+              d="M6.80097 9.9248H1.02539V14.8514H6.99392L11.6118 19.7652H20.6546L25.2983 14.8514H31.2668V9.9248H25.2983L20.3588 14.8514H11.9334L6.80097 9.9248Z"
+              fill="white"
+              stroke="#1D1A21"
+              stroke-width="0.11025"
+            />
+            <path
+              d="M6.82832 19.7783H1.05273V24.7049H7.02126L11.6392 29.6187H20.682L25.3256 24.7049H31.2941V19.7783H25.3256L20.3861 24.7049H11.9607L6.82832 19.7783Z"
+              fill="white"
+              stroke="#1D1A21"
+              stroke-width="0.11025"
+            />
+            <path
+              d="M6.85371 29.6318H1.07812V34.5585H7.04665L11.6645 39.4722H20.7074L25.351 34.5585H31.3195V29.6318H25.351L20.4115 34.5585H11.9861L6.85371 29.6318Z"
+              fill="white"
+              stroke="#1D1A21"
+              stroke-width="0.11025"
+            />
+          </svg>
         </div>
+        <div class="blur"></div>
         <h1>Invento'23</h1>
       </div>
     </div>
@@ -151,14 +195,15 @@
       <section class="main-content">
         <p>Dear {name},</p>
         <p>
-          We are pleased to inform you that your registration for the {eventName} workshop, a pre-event of the upcoming tech fest INVENTO'23
+          We are pleased to inform you that your registration for the
+          {eventName} workshop, a pre-event of the upcoming tech fest INVENTO'23
           of Government Engineering College Palakkad, has been successfully
           verified. We appreciate your interest in this event and look forward
           to welcoming you to the workshop.
         </p>
         <p>
-          The workshop is scheduled in online mode for {date} at {time}, and
-          we have designed it to equip you with valuable skills and knowledge on
+          The workshop is scheduled in online mode for {date} at {time}, and we
+          have designed it to equip you with valuable skills and knowledge on
           {{a line on workshop}}
         </p>
         <p>
