@@ -33,20 +33,22 @@ const dateString = date.toLocaleDateString('en-US', options)
     // Send email with the modified HTML template
     const message = {
       to: email,
-      from: process.env.EMAIL,
+      from: {
+        name:"Invento",
+        email: process.env.EMAIL
+      },
       subject: `Confirmation of Registration: ${eventName} at INVENTO'23 - ${dateString} - Government Engineering College Palakkad`,
       html: messageHtml,
     }
 
-    try {
-      console.log("sending message")
-      await sgMail.send(message)
-      console.log("Message sent successfully")
-      return "message sent"
-    } catch (error) {
-      console.error("Error sending email:", error)
-      return "error"
-    }
+    sgMail
+    .send(msg)
+    .then(() => {
+      console.log('Email sent')
+    })
+    .catch((error) => {
+      console.error(error)
+    })
   }
 
   //if(category=="competitions")
