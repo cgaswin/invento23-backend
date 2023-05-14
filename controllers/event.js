@@ -38,6 +38,7 @@ exports.addEvent = BigPromise(async (req, res, next) => {
   const {
     name,
     date,
+    time,
     isOnline,
     contactName,
     contactNumber,
@@ -50,24 +51,31 @@ exports.addEvent = BigPromise(async (req, res, next) => {
     rules,
   } = req.body;
 
+
   let file = req.files.photo;
 
-  if (
-    !name ||
-    !date ||
-    !regFee ||
-    !isOnline ||
-    !contactName ||
-    !contactNumber ||
-    !eventType ||
-    !category ||
-    !isPreEvent ||
-    !description ||
-    !prize ||
-    !rules
-  ) {
-    return next(new CustomError("all fields are mandatory", 400));
-  }
+  console.log(date)
+  
+
+  // Split time string into its components
+  const [timeString, period] = time.split(" ");
+
+  // Split hours and minutes from timeString
+  const [hours, minutes] = timeString.split(":");
+
+  // Convert hours to 24-hour format if necessary
+  const eventHours =
+    period === "PM" && hours !== "12"
+      ? parseInt(hours) + 12
+      : period === "AM" && hours === "12"
+      ? parseInt(hours) - 12
+      : parseInt(hours);
+
+
+
+  // Concatenate components back together into a single string
+   const eventTime = `${eventHours}:${minutes}`;
+   
 
   let rulesArray = rules.split(",");
 
@@ -78,6 +86,7 @@ exports.addEvent = BigPromise(async (req, res, next) => {
   const event = await Events.create({
     name,
     date,
+    time: new Date(`${date}T${eventTime}:00.000Z`), 
     isOnline,
     contactName,
     contactNumber,

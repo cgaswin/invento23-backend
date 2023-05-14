@@ -9,6 +9,10 @@ const eventSchema = new mongoose.Schema({
     type: Date,
     required: [true, "Please provide event date"],
   },
+  time:{
+    type:Date,
+    required:[true,"please provide time for the event"]
+  },
   isOnline:{
     type:Boolean,
   },
@@ -54,7 +58,6 @@ const eventSchema = new mongoose.Schema({
   },
   rules: {
     type: [String],
-    required: [true, "please provide event rules"],
   },
   prize:{
     first:{

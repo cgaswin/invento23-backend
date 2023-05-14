@@ -6,26 +6,78 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const mailHelper = async (order, event) => {
   console.log("inside mail helper");
   const { email, name } = order;
-  const { name: eventName, category, date } = event; //TODO:also add contact name and number
+  const {
+    name: eventName,
+    category,
+    date,
+    contactName,
+    contactNumber,
+    time,
+  } = event;
 
   //converting date to readable format : month date
   const options = { month: "long", day: "numeric" };
   const dateString = date.toLocaleDateString("en-US", options);
 
-  let html;
-  try {
-    // Read HTML template file
-    html = await fs.readFile(__dirname + "/templates/workshop.html", "utf-8");
-    console.log("html file read successful");
-  } catch (error) {
-    console.error("Error reading HTML template file:", error);
-    return "error";
-  }
+  //converting time to readable format
+  const eventTime = time;
+  const formattedTime = eventTime.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  });
+
+  let competition, workshop;
 
   if (category == "competitions") {
-    //TODO: change it later to workshop
-    // Replace placeholders in the HTML template with actual values
-    const messageHtml = html
+    try {
+      // Read HTML template file
+      competition = await fs.readFile(
+        __dirname + "/templates/competition.html",
+        "utf-8"
+      );
+      console.log("html file read successful");
+    } catch (error) {
+      console.error("Error reading HTML template file:", error);
+      return "error";
+    }
+    const messageHtml = competition
+      .replace("{{name}}", name)
+      .replace("{{date}}", dateString)
+      .replace("{{eventName}}", eventName);
+
+    // Send email with the modified HTML template
+    const message = {
+      to: email,
+      from: {
+        name: "Invento",
+        email: process.env.EMAIL,
+      },
+      subject: `Confirmation of Registration: ${eventName} at INVENTO'23 - ${dateString} - Government Engineering College Palakkad`,
+      html: messageHtml,
+    };
+
+    try {
+      await sgMail.send(message);
+      console.log("email sent");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  if (category == "workshops") {
+    try {
+      // Read HTML template file
+      workshop = await fs.readFile(
+        __dirname + "/templates/workshop.html",
+        "utf-8"
+      );
+      console.log("html file read successful");
+    } catch (error) {
+      console.error("Error reading HTML template file:", error);
+      return "error";
+    }
+    const messageHtml = workshop
       .replace("{name}", name)
       .replace("{date}", dateString)
       .replace("{eventName}", eventName);
@@ -43,13 +95,11 @@ const mailHelper = async (order, event) => {
 
     try {
       await sgMail.send(message);
-      console.log("email sent")
+      console.log("email sent");
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
-
-  //if(category=="competitions")
 };
 
 module.exports = mailHelper;

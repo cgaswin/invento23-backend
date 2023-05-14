@@ -1,245 +1,1032 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      http-equiv="X-UA-Compatible"
-      content="IE=edge"
-    />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
-    <link
-      rel="preconnect"
-      href="https://fonts.googleapis.com"
-    />
-    <link
-      rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Days+One&family=Poppins:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <title>Template</title>
-    <style>
-      * {
-        box-sizing: border-box;
-        padding: 0;
-        margin: 0;
-      }
-
-      html,
-      body {
-        height: 100%;
-      }
-
-      body {
-        line-height: 1.5;
-        font-family: "Poppins", sans-serif;
-      }
-
-      img,
-      picture,
-      video,
-      canvas,
-      svg {
-        display: block;
-        max-width: 100%;
-      }
-
-      p,
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        overflow-wrap: break-word;
-      }
-
-      .hero {
-        display: grid;
-        width: 100%;
-        background: url(https://cdn.upload.systems/uploads/gOaAU3bc.png), #000;
-        background-size: cover;
-        background-position: center;
-        min-height: 40vh;
-        position: relative;
-      }
-
-      .hero h1 {
-        text-transform: uppercase;
-        color: #fff;
-        font-size: 3rem;
-        font-weight: 400;
-      }
-
-      .hero .blur {
-        position: absolute;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.2);
-        filter: blur(67px);
-        width: 100%;
-      }
-
-      .hero__text {
-        display: flex;
-        gap: 1rem;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-        width: 100%;
-      }
-
-      main {
-        /* background-image: url(./logo-partial.svg); */
-        background-image: url(https://res.cloudinary.com/dgfoublaa/image/upload/v1683953179/inventoMail/logo-partial_p37ttv.svg);
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: bottom left;
-      }
-
-      .main-content {
-        margin-top: 3.6rem;
-        font-family: "Poppins";
-        font-style: normal;
-        font-weight: 400;
-        font-size: 1.2rem;
-        padding-inline: 1rem;
-        max-width: 37rem;
-        margin-inline: auto;
-      }
-
-      .main-content > * + * {
-        margin-top: 1.5rem;
-      }
-
-      .about {
-        margin-top: 3.8rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 2rem;
-        flex-direction: column;
-        color: hsla(0, 0%, 43%, 1);
-        text-align: center;
-        margin-bottom: 5.3rem;
-      }
-
-      .socials {
-        display: flex;
-        gap: 1rem;
-      }
-
-      .socials img {
-        width: 2rem;
-        height: 2rem;
-      }
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta name="x-apple-disable-message-reformatting">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="telephone=no" name="format-detection">
+    <title></title>
+    <!--[if (mso 16)]>
+    <style type="text/css">
+    a {text-decoration: none;}
     </style>
-  </head>
-  <body>
-    <div class="hero">
-      <div class="hero__text">
-        <div class="icon-wrap">
-          <!-- <img
-            src="https://res.cloudinary.com/dgfoublaa/image/upload/v1683953180/inventoMail/hero_xovx1e.png"
-          /> -->
-          <svg
-            width="32"
-            height="40"
-            viewBox="0 0 32 40"
-            fill="none"
-            xmlns:xlink="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M6.77558 0.0712891H1V4.99792H6.96853L11.5864 9.91168H20.6293L25.2729 4.99792H31.2414V0.0712891H25.2729L20.3334 4.99792H11.908L6.77558 0.0712891Z"
-              fill="white"
-              stroke="#1D1A21"
-              stroke-width="0.11025"
-            />
-            <path
-              d="M6.80097 9.9248H1.02539V14.8514H6.99392L11.6118 19.7652H20.6546L25.2983 14.8514H31.2668V9.9248H25.2983L20.3588 14.8514H11.9334L6.80097 9.9248Z"
-              fill="white"
-              stroke="#1D1A21"
-              stroke-width="0.11025"
-            />
-            <path
-              d="M6.82832 19.7783H1.05273V24.7049H7.02126L11.6392 29.6187H20.682L25.3256 24.7049H31.2941V19.7783H25.3256L20.3861 24.7049H11.9607L6.82832 19.7783Z"
-              fill="white"
-              stroke="#1D1A21"
-              stroke-width="0.11025"
-            />
-            <path
-              d="M6.85371 29.6318H1.07812V34.5585H7.04665L11.6645 39.4722H20.7074L25.351 34.5585H31.3195V29.6318H25.351L20.4115 34.5585H11.9861L6.85371 29.6318Z"
-              fill="white"
-              stroke="#1D1A21"
-              stroke-width="0.11025"
-            />
-          </svg>
-        </div>
-        <div class="blur"></div>
-        <h1>Invento'23</h1>
-      </div>
+    <![endif]-->
+    <!--[if gte mso 9]><style>sup { font-size: 100% !important; }</style><![endif]-->
+    <!--[if gte mso 9]>
+<xml>
+    <o:OfficeDocumentSettings>
+    <o:AllowPNG></o:AllowPNG>
+    <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+</xml>
+<![endif]-->
+</head>
+
+<body>
+    <div class="es-wrapper-color">
+        <!--[if gte mso 9]>
+			<v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t">
+				<v:fill type="tile" color="#f6f6f6"></v:fill>
+			</v:background>
+		<![endif]-->
+        <table class="es-wrapper" width="100%" cellspacing="0" cellpadding="0">
+            <tbody>
+                <tr>
+                    <td class="esd-email-paddings" valign="top">
+                        <table class="esd-header-popover es-header" cellspacing="0" cellpadding="0" align="center">
+                            <tbody>
+                                <tr>
+                                    <td class="esd-stripe" align="center">
+                                        <table class="es-header-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="esd-structure es-p20t es-p20r es-p20l" align="left">
+                                                        <table cellpadding="0" cellspacing="0" width="100%">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td width="560" class="esd-container-frame" align="center" valign="top">
+                                                                        <table cellpadding="0" cellspacing="0" width="100%">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td align="center" class="esd-block-image" style="font-size: 0px;"><a target="_blank"><img class="adapt-img" src="https://dgvoxw.stripocdn.email/content/guids/CABINET_077cbfc3212f85602fdfc07f1f71277ec127658f1ca10e7feb652c68a22a6aec/images/invento_email_banner.png" alt style="display: block;" width="560"></a></td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="es-content" cellspacing="0" cellpadding="0" align="center">
+                            <tbody>
+                                <tr>
+                                    <td class="esd-stripe" align="center">
+                                        <table class="es-content-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="esd-structure es-p20" align="left" background="https://dgvoxw.stripocdn.email/content/guids/CABINET_077cbfc3212f85602fdfc07f1f71277ec127658f1ca10e7feb652c68a22a6aec/images/invento_email_bg.png" style="background-image: url(https://dgvoxw.stripocdn.email/content/guids/CABINET_077cbfc3212f85602fdfc07f1f71277ec127658f1ca10e7feb652c68a22a6aec/images/invento_email_bg.png); background-repeat: no-repeat; background-position: left 80%;">
+                                                        <table width="100%" cellspacing="0" cellpadding="0">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="esd-container-frame" width="560" valign="top" align="center">
+                                                                        <table width="100%" cellspacing="0" cellpadding="0">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td align="left" class="esd-block-text es-p30 es-m-p15">
+                                                                                        <p style="font-size: 14px;">Dear {name},<br><br>We are pleased to inform you that your registration for the {eventName} workshop, a pre-event of the upcoming tech fest INVENTO'23 of Government Engineering College Palakkad, has been successfully verified. We appreciate your interest in this event and look forward to welcoming you to the workshop.<br><br>The workshop is scheduled in online mode for {{date}} at {{time}}, and we have designed it to equip you with valuable skills and knowledge on {{a line on workshop}}<br><br>The workshop link will be shared with you via email a few days before the event. Please make sure to check your inbox and spam folder to ensure you receive the link. It is essential to have a stable internet connection and a device with audio capabilities to participate fully in the workshop.<br><br>Should you have any questions or concerns regarding the workshop, please do not hesitate to contact us at {{Contact Name - number}}. We are committed to supporting you and ensuring that you have a fulfilling and enriching experience at the workshop.<br><br>Thank you for registering for the workshop, and we look forward to seeing you there.<br><br>Best regards,<br><br>Team INVENTO’23<br>Government Engineering College Palakkad</p>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <!-- <td align="center" class="esd-block-social" style="font-size:0">
+                                                                                        <table cellpadding="0" cellspacing="0" class="es-table-not-adapt es-social">
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td align="center" valign="top" class="es-p10r"><a target="_blank" href="https://www.facebook.com/inventogec?mibextid=ZbWKwL"><img src="https://dgvoxw.stripocdn.email/content/assets/img/social-icons/circle-black-bordered/facebook-circle-black-bordered.png" alt="Fb" title="Facebook" width="24"></a></td>
+                                                                                                    <td align="center" valign="top" class="es-p10r"><a target="_blank" href="https://instagram.com/invento_gecpalakkad?igshid=NTc4MTIwNjQ2YQ=="><img src="https://dgvoxw.stripocdn.email/content/assets/img/social-icons/circle-black-bordered/instagram-circle-black-bordered.png" alt="Ig" title="Instagram" width="24"></a></td>
+                                                                                                    <td align="center" valign="top"><a target="_blank" href="https://youtube.com/@inventogecpalakkad2600"><img src="https://dgvoxw.stripocdn.email/content/assets/img/social-icons/circle-black-bordered/youtube-circle-black-bordered.png" alt="Yt" title="Youtube" width="24"></a></td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </td> -->
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td align="center" class="esd-block-text es-p10t">
+                                                                                        <p style="color: #6c6c6c; line-height: 150%; font-size: 11px; font-family: helvetica, 'helvetica neue', arial, verdana, sans-serif;">Invento’23©</p>
+                                                                                        <p style="color: #6c6c6c; line-height: 150%; font-size: 8px;"><span style="font-family: helvetica, 'helvetica neue', arial, verdana, sans-serif; font-size: 11px;"></span>Government Engineering College,<br>Sreekrishnapuram, Palakkad, Kerala - 678633</p>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="esd-footer-popover es-footer" cellspacing="0" cellpadding="0" align="center">
+                            <tbody>
+                                <tr>
+                                    <td class="esd-stripe" align="center">
+                                        <table class="es-footer-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="esd-structure es-p20t es-p20b es-p20r es-p20l" align="left">
+                                                        <table cellspacing="0" cellpadding="0" width="100%">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="esd-container-frame" width="560" align="left">
+                                                                        <table width="100%" cellspacing="0" cellpadding="0">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td class="esd-empty-container" style="display: none;" align="center"></td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
+</body>
 
-    <!--
-      logo partial: https://res.cloudinary.com/dgfoublaa/image/upload/v1683953179/inventoMail/logo-partial_p37ttv.svg
-
-      logo: https://res.cloudinary.com/dgfoublaa/image/upload/v1683953179/inventoMail/logo_chfdcp.svg
-    -->
-
-    <main>
-      <section class="main-content">
-        <p>Dear {name},</p>
-        <p>
-          We are pleased to inform you that your registration for the
-          {eventName} workshop, a pre-event of the upcoming tech fest INVENTO'23
-          of Government Engineering College Palakkad, has been successfully
-          verified. We appreciate your interest in this event and look forward
-          to welcoming you to the workshop.
-        </p>
-        <p>
-          The workshop is scheduled in online mode for {date} at {time}, and we
-          have designed it to equip you with valuable skills and knowledge on
-          {{a line on workshop}}
-        </p>
-        <p>
-          The workshop link will be shared with you via email a few days before
-          the event. Please make sure to check your inbox and spam folder to
-          ensure you receive the link. It is essential to have a stable internet
-          connection and a device with audio capabilities to participate fully
-          in the workshop.
-        </p>
-        <p>
-          Should you have any questions or concerns regarding the workshop,
-          please do not hesitate to contact us at {{Contact Name - number}}. We
-          are committed to supporting you and ensuring that you have a
-          fulfilling and enriching experience at the workshop.
-        </p>
-        <p>
-          Thank you for registering for the workshop, and we look forward to
-          seeing you there.
-        </p>
-        <p>Best regards,</p>
-        <p>
-          Team INVENTO’23 <br />
-          Government Engineering College Palakkad
-        </p>
-      </section>
-
-      <section class="about">
-        <div>
-          <p>Invento'23&copy;</p>
-          <address>
-            Government Engineering College,<br />
-            Sreekrishnapuram, Palakkad, Kerala -678633
-          </address>
-        </div>
-      </section>
-    </main>
-  </body>
 </html>
+
+
+
+<!-- /* CONFIG STYLES Please do not delete and edit CSS styles below */
+/* IMPORTANT THIS STYLES MUST BE ON FINAL EMAIL */
+#outlook a {
+    padding: 0;
+}
+
+.es-button {
+    mso-style-priority: 100 !important;
+    text-decoration: none !important;
+}
+
+a[x-apple-data-detectors] {
+    color: inherit !important;
+    text-decoration: none !important;
+    font-size: inherit !important;
+    font-family: inherit !important;
+    font-weight: inherit !important;
+    line-height: inherit !important;
+}
+
+.es-desk-hidden {
+    display: none;
+    float: left;
+    overflow: hidden;
+    width: 0;
+    max-height: 0;
+    line-height: 0;
+    mso-hide: all;
+}
+
+.es-button-border:hover a.es-button,
+.es-button-border:hover button.es-button {
+    background: #56d66b !important;
+}
+
+.es-button-border:hover {
+    border-color: #42d159 #42d159 #42d159 #42d159 !important;
+    background: #56d66b !important;
+}
+
+/*
+END OF IMPORTANT
+*/
+body {
+    width: 100%;
+    font-family: arial, 'helvetica neue', helvetica, sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+table {
+    mso-table-lspace: 0pt;
+    mso-table-rspace: 0pt;
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+
+table td,
+body,
+.es-wrapper {
+    padding: 0;
+    Margin: 0;
+}
+
+.es-content,
+.es-header,
+.es-footer {
+    table-layout: fixed !important;
+    width: 100%;
+}
+
+img {
+    display: block;
+    border: 0;
+    outline: none;
+    text-decoration: none;
+    -ms-interpolation-mode: bicubic;
+}
+
+p,
+hr {
+    Margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    Margin: 0;
+    line-height: 120%;
+    mso-line-height-rule: exactly;
+    font-family: arial, 'helvetica neue', helvetica, sans-serif;
+}
+
+p,
+ul li,
+ol li,
+a {
+    -webkit-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+    mso-line-height-rule: exactly;
+}
+
+.es-left {
+    float: left;
+}
+
+.es-right {
+    float: right;
+}
+
+.es-p5 {
+    padding: 5px;
+}
+
+.es-p5t {
+    padding-top: 5px;
+}
+
+.es-p5b {
+    padding-bottom: 5px;
+}
+
+.es-p5l {
+    padding-left: 5px;
+}
+
+.es-p5r {
+    padding-right: 5px;
+}
+
+.es-p10 {
+    padding: 10px;
+}
+
+.es-p10t {
+    padding-top: 10px;
+}
+
+.es-p10b {
+    padding-bottom: 10px;
+}
+
+.es-p10l {
+    padding-left: 10px;
+}
+
+.es-p10r {
+    padding-right: 10px;
+}
+
+.es-p15 {
+    padding: 15px;
+}
+
+.es-p15t {
+    padding-top: 15px;
+}
+
+.es-p15b {
+    padding-bottom: 15px;
+}
+
+.es-p15l {
+    padding-left: 15px;
+}
+
+.es-p15r {
+    padding-right: 15px;
+}
+
+.es-p20 {
+    padding: 20px;
+}
+
+.es-p20t {
+    padding-top: 20px;
+}
+
+.es-p20b {
+    padding-bottom: 20px;
+}
+
+.es-p20l {
+    padding-left: 20px;
+}
+
+.es-p20r {
+    padding-right: 20px;
+}
+
+.es-p25 {
+    padding: 25px;
+}
+
+.es-p25t {
+    padding-top: 25px;
+}
+
+.es-p25b {
+    padding-bottom: 25px;
+}
+
+.es-p25l {
+    padding-left: 25px;
+}
+
+.es-p25r {
+    padding-right: 25px;
+}
+
+.es-p30 {
+    padding: 30px;
+}
+
+.es-p30t {
+    padding-top: 30px;
+}
+
+.es-p30b {
+    padding-bottom: 30px;
+}
+
+.es-p30l {
+    padding-left: 30px;
+}
+
+.es-p30r {
+    padding-right: 30px;
+}
+
+.es-p35 {
+    padding: 35px;
+}
+
+.es-p35t {
+    padding-top: 35px;
+}
+
+.es-p35b {
+    padding-bottom: 35px;
+}
+
+.es-p35l {
+    padding-left: 35px;
+}
+
+.es-p35r {
+    padding-right: 35px;
+}
+
+.es-p40 {
+    padding: 40px;
+}
+
+.es-p40t {
+    padding-top: 40px;
+}
+
+.es-p40b {
+    padding-bottom: 40px;
+}
+
+.es-p40l {
+    padding-left: 40px;
+}
+
+.es-p40r {
+    padding-right: 40px;
+}
+
+.es-menu td {
+    border: 0;
+}
+
+.es-menu td a img {
+    display: inline-block !important;
+    vertical-align: middle;
+}
+
+/*
+END CONFIG STYLES
+*/
+s {
+    text-decoration: line-through;
+}
+
+p,
+ul li,
+ol li {
+    font-family: arial, 'helvetica neue', helvetica, sans-serif;
+    line-height: 150%;
+}
+
+ul li,
+ol li {
+    Margin-bottom: 15px;
+    margin-left: 0;
+}
+
+a {
+    text-decoration: underline;
+}
+
+.es-menu td a {
+    text-decoration: none;
+    display: block;
+    font-family: arial, 'helvetica neue', helvetica, sans-serif;
+}
+
+.es-wrapper {
+    width: 100%;
+    height: 100%;
+    background-repeat: repeat;
+    background-position: center top;
+}
+
+.es-wrapper-color,
+.es-wrapper {
+    background-color: #f6f6f6;
+}
+
+.es-header {
+    background-color: transparent;
+    background-repeat: repeat;
+    background-position: center top;
+}
+
+.es-header-body {
+    background-color: #ffffff;
+}
+
+.es-header-body p,
+.es-header-body ul li,
+.es-header-body ol li {
+    color: #333333;
+    font-size: 14px;
+}
+
+.es-header-body a {
+    color: #2cb543;
+    font-size: 14px;
+}
+
+.es-content-body {
+    background-color: #ffffff;
+}
+
+.es-content-body p,
+.es-content-body ul li,
+.es-content-body ol li {
+    color: #333333;
+    font-size: 14px;
+}
+
+.es-content-body a {
+    color: #2cb543;
+    font-size: 14px;
+}
+
+.es-footer {
+    background-color: transparent;
+    background-repeat: repeat;
+    background-position: center top;
+}
+
+.es-footer-body {
+    background-color: #ffffff;
+}
+
+.es-footer-body p,
+.es-footer-body ul li,
+.es-footer-body ol li {
+    color: #333333;
+    font-size: 14px;
+}
+
+.es-footer-body a {
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.es-infoblock,
+.es-infoblock p,
+.es-infoblock ul li,
+.es-infoblock ol li {
+    line-height: 120%;
+    font-size: 12px;
+    color: #cccccc;
+}
+
+.es-infoblock a {
+    font-size: 12px;
+    color: #cccccc;
+}
+
+h1 {
+    font-size: 30px;
+    font-style: normal;
+    font-weight: normal;
+    color: #333333;
+}
+
+h2 {
+    font-size: 24px;
+    font-style: normal;
+    font-weight: normal;
+    color: #333333;
+}
+
+h3 {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: normal;
+    color: #333333;
+}
+
+.es-header-body h1 a,
+.es-content-body h1 a,
+.es-footer-body h1 a {
+    font-size: 30px;
+}
+
+.es-header-body h2 a,
+.es-content-body h2 a,
+.es-footer-body h2 a {
+    font-size: 24px;
+}
+
+.es-header-body h3 a,
+.es-content-body h3 a,
+.es-footer-body h3 a {
+    font-size: 20px;
+}
+
+a.es-button,
+button.es-button {
+    display: inline-block;
+    background: #31cb4b;
+    border-radius: 30px;
+    font-size: 18px;
+    font-family: arial, 'helvetica neue', helvetica, sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    line-height: 120%;
+    color: #ffffff;
+    text-decoration: none;
+    width: auto;
+    text-align: center;
+    padding: 10px 20px 10px 20px;
+}
+
+.es-button-border {
+    border-style: solid solid solid solid;
+    border-color: #2cb543 #2cb543 #2cb543 #2cb543;
+    background: #2cb543;
+    border-width: 0px 0px 2px 0px;
+    display: inline-block;
+    border-radius: 30px;
+    width: auto;
+    mso-border-alt: 10px;
+}
+
+.msohide {
+    mso-hide: all;
+}
+
+/* RESPONSIVE STYLES Please do not delete and edit CSS styles below. If you don't need responsive layout, please delete this section. */
+@media only screen and (max-width: 600px) {
+
+    p,
+    ul li,
+    ol li,
+    a {
+        line-height: 150% !important;
+    }
+
+    h1,
+    h2,
+    h3,
+    h1 a,
+    h2 a,
+    h3 a {
+        line-height: 120% !important;
+    }
+
+    h1 {
+        font-size: 30px !important;
+        text-align: left;
+    }
+
+    h2 {
+        font-size: 24px !important;
+        text-align: left;
+    }
+
+    h3 {
+        font-size: 20px !important;
+        text-align: left;
+    }
+
+    .es-header-body h1 a,
+    .es-content-body h1 a,
+    .es-footer-body h1 a {
+        font-size: 30px !important;
+        text-align: left;
+    }
+
+    .es-header-body h2 a,
+    .es-content-body h2 a,
+    .es-footer-body h2 a {
+        font-size: 24px !important;
+        text-align: left;
+    }
+
+    .es-header-body h3 a,
+    .es-content-body h3 a,
+    .es-footer-body h3 a {
+        font-size: 20px !important;
+        text-align: left;
+    }
+
+    .es-menu td a {
+        font-size: 14px !important;
+    }
+
+    .es-header-body p,
+    .es-header-body ul li,
+    .es-header-body ol li,
+    .es-header-body a {
+        font-size: 14px !important;
+    }
+
+    .es-content-body p,
+    .es-content-body ul li,
+    .es-content-body ol li,
+    .es-content-body a {
+        font-size: 14px !important;
+    }
+
+    .es-footer-body p,
+    .es-footer-body ul li,
+    .es-footer-body ol li,
+    .es-footer-body a {
+        font-size: 14px !important;
+    }
+
+    .es-infoblock p,
+    .es-infoblock ul li,
+    .es-infoblock ol li,
+    .es-infoblock a {
+        font-size: 12px !important;
+    }
+
+    *[class="gmail-fix"] {
+        display: none !important;
+    }
+
+    .es-m-txt-c,
+    .es-m-txt-c h1,
+    .es-m-txt-c h2,
+    .es-m-txt-c h3 {
+        text-align: center !important;
+    }
+
+    .es-m-txt-r,
+    .es-m-txt-r h1,
+    .es-m-txt-r h2,
+    .es-m-txt-r h3 {
+        text-align: right !important;
+    }
+
+    .es-m-txt-l,
+    .es-m-txt-l h1,
+    .es-m-txt-l h2,
+    .es-m-txt-l h3 {
+        text-align: left !important;
+    }
+
+    .es-m-txt-r img,
+    .es-m-txt-c img,
+    .es-m-txt-l img {
+        display: inline !important;
+    }
+
+    .es-button-border {
+        display: inline-block !important;
+    }
+
+    a.es-button,
+    button.es-button {
+        font-size: 18px !important;
+        display: inline-block !important;
+    }
+
+    .es-adaptive table,
+    .es-left,
+    .es-right {
+        width: 100% !important;
+    }
+
+    .es-content table,
+    .es-header table,
+    .es-footer table,
+    .es-content,
+    .es-footer,
+    .es-header {
+        width: 100% !important;
+        max-width: 600px !important;
+    }
+
+    .es-adapt-td {
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .adapt-img {
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    .es-m-p0 {
+        padding: 0 !important;
+    }
+
+    .es-m-p0r {
+        padding-right: 0 !important;
+    }
+
+    .es-m-p0l {
+        padding-left: 0 !important;
+    }
+
+    .es-m-p0t {
+        padding-top: 0 !important;
+    }
+
+    .es-m-p0b {
+        padding-bottom: 0 !important;
+    }
+
+    .es-m-p20b {
+        padding-bottom: 20px !important;
+    }
+
+    .es-mobile-hidden,
+    .es-hidden {
+        display: none !important;
+    }
+
+    tr.es-desk-hidden,
+    td.es-desk-hidden,
+    table.es-desk-hidden {
+        width: auto !important;
+        overflow: visible !important;
+        float: none !important;
+        max-height: inherit !important;
+        line-height: inherit !important;
+    }
+
+    tr.es-desk-hidden {
+        display: table-row !important;
+    }
+
+    table.es-desk-hidden {
+        display: table !important;
+    }
+
+    td.es-desk-menu-hidden {
+        display: table-cell !important;
+    }
+
+    .es-menu td {
+        width: 1% !important;
+    }
+
+    table.es-table-not-adapt,
+    .esd-block-html table {
+        width: auto !important;
+    }
+
+    table.es-social {
+        display: inline-block !important;
+    }
+
+    table.es-social td {
+        display: inline-block !important;
+    }
+
+    .es-desk-hidden {
+        display: table-row !important;
+        width: auto !important;
+        overflow: visible !important;
+        max-height: inherit !important;
+    }
+
+    .es-m-p5 {
+        padding: 5px !important;
+    }
+
+    .es-m-p5t {
+        padding-top: 5px !important;
+    }
+
+    .es-m-p5b {
+        padding-bottom: 5px !important;
+    }
+
+    .es-m-p5r {
+        padding-right: 5px !important;
+    }
+
+    .es-m-p5l {
+        padding-left: 5px !important;
+    }
+
+    .es-m-p10 {
+        padding: 10px !important;
+    }
+
+    .es-m-p10t {
+        padding-top: 10px !important;
+    }
+
+    .es-m-p10b {
+        padding-bottom: 10px !important;
+    }
+
+    .es-m-p10r {
+        padding-right: 10px !important;
+    }
+
+    .es-m-p10l {
+        padding-left: 10px !important;
+    }
+
+    .es-m-p15 {
+        padding: 15px !important;
+    }
+
+    .es-m-p15t {
+        padding-top: 15px !important;
+    }
+
+    .es-m-p15b {
+        padding-bottom: 15px !important;
+    }
+
+    .es-m-p15r {
+        padding-right: 15px !important;
+    }
+
+    .es-m-p15l {
+        padding-left: 15px !important;
+    }
+
+    .es-m-p20 {
+        padding: 20px !important;
+    }
+
+    .es-m-p20t {
+        padding-top: 20px !important;
+    }
+
+    .es-m-p20r {
+        padding-right: 20px !important;
+    }
+
+    .es-m-p20l {
+        padding-left: 20px !important;
+    }
+
+    .es-m-p25 {
+        padding: 25px !important;
+    }
+
+    .es-m-p25t {
+        padding-top: 25px !important;
+    }
+
+    .es-m-p25b {
+        padding-bottom: 25px !important;
+    }
+
+    .es-m-p25r {
+        padding-right: 25px !important;
+    }
+
+    .es-m-p25l {
+        padding-left: 25px !important;
+    }
+
+    .es-m-p30 {
+        padding: 30px !important;
+    }
+
+    .es-m-p30t {
+        padding-top: 30px !important;
+    }
+
+    .es-m-p30b {
+        padding-bottom: 30px !important;
+    }
+
+    .es-m-p30r {
+        padding-right: 30px !important;
+    }
+
+    .es-m-p30l {
+        padding-left: 30px !important;
+    }
+
+    .es-m-p35 {
+        padding: 35px !important;
+    }
+
+    .es-m-p35t {
+        padding-top: 35px !important;
+    }
+
+    .es-m-p35b {
+        padding-bottom: 35px !important;
+    }
+
+    .es-m-p35r {
+        padding-right: 35px !important;
+    }
+
+    .es-m-p35l {
+        padding-left: 35px !important;
+    }
+
+    .es-m-p40 {
+        padding: 40px !important;
+    }
+
+    .es-m-p40t {
+        padding-top: 40px !important;
+    }
+
+    .es-m-p40b {
+        padding-bottom: 40px !important;
+    }
+
+    .es-m-p40r {
+        padding-right: 40px !important;
+    }
+
+    .es-m-p40l {
+        padding-left: 40px !important;
+    }
+}
+
+/* END RESPONSIVE STYLES */
+html,
+body {
+    font-family: arial, 'helvetica neue', helvetica, sans-serif;
+}
+
+.es-p-default {
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 0px;
+    padding-left: 20px;
+}
+
+.es-p-all-default {
+    padding: 0px;
+} -->
