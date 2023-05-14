@@ -15,21 +15,31 @@ const mailHelper = async (order, event) => {
     time,
   } = event;
 
+  console.log("time: ",time)
+
   //converting date to readable format : month date
   const options = { month: "long", day: "numeric" };
   const dateString = date.toLocaleDateString("en-US", options);
 
-  //converting time to readable format
-  const eventTime = time;
-  const formattedTime = eventTime.toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true,
-  });
+  const hours = time.getHours();
+  const minutes = time.getMinutes();
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  const formattedHours = hours % 12 || 12;
+  const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+  const formattedTime = `${formattedHours}:${formattedMinutes} ${ampm}`;
+
+  console.log("formatted time: ",formattedTime)
 
   let competition, workshop;
 
   if (category == "competitions") {
+    const {rules} = event
+    let rulesHtml = "";
+
+    for (let i =0 ; i < rules.length; i++) {
+      rulesHtml += `<li>${rules[i]}</li>`
+    }
+
     try {
       // Read HTML template file
       competition = await fs.readFile(
@@ -42,9 +52,14 @@ const mailHelper = async (order, event) => {
       return "error";
     }
     const messageHtml = competition
-      .replace("{{name}}", name)
-      .replace("{{date}}", dateString)
-      .replace("{{eventName}}", eventName);
+      .replace("{name}", name)
+      .replace("{date}", dateString)
+      .replace("{eventName}", eventName)
+      .replace("{time}",formattedTime)
+      .replace("{contactNumber}",contactNumber)
+      .replace("{rules}", rulesHtml); 
+
+
 
     // Send email with the modified HTML template
     const message = {
@@ -80,7 +95,12 @@ const mailHelper = async (order, event) => {
     const messageHtml = workshop
       .replace("{name}", name)
       .replace("{date}", dateString)
-      .replace("{eventName}", eventName);
+      .replace("{eventName}", eventName)
+      .replace("{time}",formattedTime)
+      .replace("{contactName}",contactName)
+      .replace("{contactNumber}",contactNumber);
+
+
 
     // Send email with the modified HTML template
     const message = {
