@@ -35,7 +35,9 @@ const mailHelper = async (order, event) => {
     let rulesHtml = "";
 
     for (let i =0 ; i < rules.length; i++) {
-      rulesHtml += `<li>${rules[i]}</li>`
+      rulesHtml += `<ol style="padding-top: 10px; padding-bottom: 10px;">
+      <li>${rules[i]}</li>
+      </ol>`
     }
 
     try {
