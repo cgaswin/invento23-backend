@@ -31,9 +31,6 @@ exports.getOneEvent = BigPromise(async (req, res, next) => {
 });
 
 exports.addEvent = BigPromise(async (req, res, next) => {
-  if (!req.files) {
-    return next(new CustomError("image is required", 400));
-  }
 
   const {
     name,
@@ -51,13 +48,13 @@ exports.addEvent = BigPromise(async (req, res, next) => {
     firstPrize,
     secondPrize,
     thirdPrize,
+    department,
     rules,
   } = req.body;
 
 
   let file = req.files.photo;
 
-  console.log(date)
   
 
   // Split time string into its components
@@ -109,6 +106,7 @@ exports.addEvent = BigPromise(async (req, res, next) => {
       secure_url: result.secure_url,
     },
     prizeMoney,
+    department,
     rules: rulesArray,
   });
 

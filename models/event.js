@@ -47,11 +47,9 @@ const eventSchema = new mongoose.Schema({
   photo: {
     id: {
       type: String,
-      required: true,
     },
     secure_url: {
       type: String,
-      required: true,
     },
   },
   prizeMoney:{
@@ -67,6 +65,10 @@ const eventSchema = new mongoose.Schema({
       type:String,
       default:""
     },
+  },
+  department:{
+    type:String,
+    default:""
   },
   rules: {
     type: [String],
