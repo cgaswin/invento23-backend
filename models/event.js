@@ -23,8 +23,10 @@ const eventSchema = new mongoose.Schema({
     type:Number,
   },
   regFee: {
-    type: Number,
-    required: [true, "Please provide event registration fees"],
+    type: Number
+  },
+  regFeeTeam: {
+    type: Number
   },
   eventType: {
     type: String,
