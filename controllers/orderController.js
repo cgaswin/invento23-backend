@@ -66,8 +66,8 @@ async function updateOrder(id) {
   if (!user) {
     await createUser(order);
   }
-
-  for (const event of order.orderEvents) {
+  else{
+    for (const event of order.orderEvents) {
     const id = event.event;
     const singleEvent = await Events.findById(id);
     await updateEventTicket(id);
@@ -80,6 +80,8 @@ async function updateOrder(id) {
   }
 
   await order.save();
+}
+  
 }
 
 async function updateEventTicket(eventId) {
