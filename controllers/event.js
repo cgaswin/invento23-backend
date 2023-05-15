@@ -48,7 +48,9 @@ exports.addEvent = BigPromise(async (req, res, next) => {
     category,
     isPreEvent,
     description,
-    prize,
+    firstPrize,
+    secondPrize,
+    thirdPrize,
     rules,
   } = req.body;
 
@@ -84,6 +86,11 @@ exports.addEvent = BigPromise(async (req, res, next) => {
     folder: "invento23",
   });
 
+  let prizeMoney = {}
+  prizeMoney.first=firstPrize
+  prizeMoney.second=secondPrize
+  prizeMoney.third=thirdPrize
+
   const event = await Events.create({
     name,
     date,
@@ -101,7 +108,7 @@ exports.addEvent = BigPromise(async (req, res, next) => {
       id: result.public_id,
       secure_url: result.secure_url,
     },
-    prize,
+    prizeMoney,
     rules: rulesArray,
   });
 
