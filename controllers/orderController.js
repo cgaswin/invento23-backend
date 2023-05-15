@@ -68,7 +68,7 @@ async function updateOrder(id) {
   }
   else{
     for (const event of order.orderEvents) {
-      await updateUser(order.email, singleEvent.name, order.referalCode);
+      await updateUser(order.email, event.name, order.referalCode);
     }
 }
 
