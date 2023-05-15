@@ -68,20 +68,23 @@ async function updateOrder(id) {
   }
   else{
     for (const event of order.orderEvents) {
-    const id = event.event;
-    const singleEvent = await Events.findById(id);
-    await updateEventTicket(id);
-    await updateUser(order.email, singleEvent.name, order.referalCode);
-    await mailHelper(order,singleEvent);
-  }
-
-  if (order.referalCode) {
-    await updateCampusAmbassador(order.referalCode);
-  }
-
-  await order.save();
+      await updateUser(order.email, singleEvent.name, order.referalCode);
+    }
 }
-  
+
+for (const event of order.orderEvents) {
+  const id = event.event;
+  const singleEvent = await Events.findById(id);
+  await updateEventTicket(id);
+  await mailHelper(order,singleEvent);
+}
+
+if (order.referalCode) {
+  await updateCampusAmbassador(order.referalCode);
+}
+
+await order.save();
+
 }
 
 async function updateEventTicket(eventId) {
