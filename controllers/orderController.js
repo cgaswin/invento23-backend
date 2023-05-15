@@ -68,7 +68,9 @@ async function updateOrder(id) {
   }
   else{
     for (const event of order.orderEvents) {
-      await updateUser(order.email, event.name, order.referalCode);
+      const id = event.event
+      const singleEvent = await Events.findById(id)
+      await updateUser(order.email, singleEvent.name, order.referalCode);
     }
 }
 
