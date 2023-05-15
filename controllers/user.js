@@ -15,13 +15,7 @@ exports.createUser = BigPromise(
     for(const event of orderEvents){
       const id = event.event
       const singleEvent = await Events.findById(id)
-      console.log("pushing to events",singleEvent.name)
-
-      if (!events.includes(singleEvent.name)) {
         events.push(singleEvent.name);
-      }
-
-      console.log("pushing to events completed",events)
     }
 
 
