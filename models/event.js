@@ -43,7 +43,7 @@ const eventSchema = new mongoose.Schema({
     required: [true, "please provide event category eg:workshop"],
   },
   isPreEvent: {
-    type: Boolean,
+    type: String,
     required: [true, "Please provide if the event is a pre event"],
   },
   description: {
