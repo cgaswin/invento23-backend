@@ -79,7 +79,7 @@ exports.addEvent = BigPromise(async (req, res, next) => {
    const eventTime = `${eventHours}:${minutes}`;
    
 
-  let rulesArray = rules.split(",");
+  let rulesArray = rules.split("$");
 
   const result = await cloudinary.uploader.upload(file.tempFilePath, {
     folder: "invento23",
