@@ -16,10 +16,16 @@ const eventSchema = new mongoose.Schema({
   isOnline:{
     type:Boolean,
   },
-  contactName:{
+  contactNameFirst:{
     type:String,
   },
-  contactNumber:{
+  contactNumberFirst:{
+    type:Number,
+  },
+  contactNameSecond:{
+    type:String,
+  },
+  contactNumberSecond:{
     type:Number,
   },
   regFee: {
