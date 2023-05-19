@@ -8,8 +8,6 @@ exports.captureRazorPayment = BigPromise(async (req, res, next) => {
     key_secret: process.env.RAZORPAY_SECRET,
   });
 
-  console.log(req.body.amount);
-
   const myOrder = await instance.orders.create({
     amount: req.body.amount*100,//converting rupees to paisa
     currency: "INR",
