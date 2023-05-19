@@ -42,7 +42,6 @@ exports.createUser = BigPromise(
 
 exports.getUsers = BigPromise(async (req, res, next) => {
   const users = await Users.find();
-  console.log(users);
   res.status(200).json({
     success: true,
     users,
