@@ -20,13 +20,13 @@ const eventSchema = new mongoose.Schema({
     type:String,
   },
   contactNumberFirst:{
-    type:Number,
+    type:String,
   },
   contactNameSecond:{
     type:String,
   },
   contactNumberSecond:{
-    type:Number,
+    type:String,
   },
   regFee: {
     type: Number
