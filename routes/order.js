@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const validation = require("../middlewares/validation");
-const orderSchema = require("../validations/orderValidate");
+const orderSchema = require("../validations/orderSchema");
 
 const { createOrder, getAllOrders } = require("../controllers/orderController");
 
