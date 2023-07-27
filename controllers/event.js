@@ -14,7 +14,6 @@ exports.getEvents = BigPromise(async (req, res, next) => {
   }
 
   let events = await Events.find(queryObject);
-  console.log(events);
   return res.status(200).json({
     success: true,
     events,
