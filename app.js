@@ -5,9 +5,12 @@ const cookieParser = require("cookie-parser")
 const fileUpload = require("express-fileupload")
 const cors = require("cors")
 const rateLimit = require("express-rate-limit")
+const helmet = require("helmet")
+
 const app = express()
 
-app.use(express.json())
+app.use(helmet())
+app.use(express.json({ limit: "10kb" }))
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 app.use(morgan("tiny"))
