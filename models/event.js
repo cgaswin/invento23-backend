@@ -10,7 +10,7 @@ const eventSchema = new mongoose.Schema({
     required: [true, "Please provide event date"],
   },
   time:{
-    type:Date,
+    type:String,
     required:[true,"please provide time for the event"]
   },
   isOnline:{

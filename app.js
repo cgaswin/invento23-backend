@@ -48,6 +48,12 @@ app.get("/api/v1/updateevent", (req, res) => {
   res.render("updateEvent")
 })
 
+
+app.get("/api/v1/updatephoto",(req,res)=>{
+  res.render("updateEventPhoto")
+})
+
+
 app.post("/rzp-test", async (req, res, next) => {
   const amountDue = req.body.amount * 100
 
@@ -86,9 +92,6 @@ app.post("/rzp-test", async (req, res, next) => {
       error: error,
     })
   }
-})
-app.get("/api/v1/updateevent", (req, res) => {
-  res.render("updateEvent")
 })
 
 app.post("/rzp-test", async (req, res, next) => {
