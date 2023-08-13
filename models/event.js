@@ -57,19 +57,9 @@ const eventSchema = new mongoose.Schema({
       type: String,
     },
   },
-  prizeMoney:{
-    first:{
-      type:String,
-      default:""
-    },
-    second:{
-      type:String,
-      default:""
-    },
-    third:{
-      type:String,
-      default:""
-    },
+  prize:{
+    type:Number,
+    default:0
   },
   department:{
     type:String,
@@ -77,20 +67,6 @@ const eventSchema = new mongoose.Schema({
   },
   rules: {
     type: [String],
-  },
-  prize:{
-    first:{
-      type:String,
-      default:""
-    },
-    second:{
-      type:String,
-      default:""
-    },
-    third:{
-      type:String,
-      default:""
-    },
   },
   ticketsBooked:{
     type:Number,

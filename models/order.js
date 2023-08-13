@@ -31,6 +31,7 @@ const orderSchema = new mongoose.Schema({
         ref: "Events",
         required: true,
       },
+      
     },
   ],
   paymentInfo: {

@@ -49,9 +49,7 @@ exports.addEvent = BigPromise(async (req, res, next) => {
     category,
     isPreEvent,
     description,
-    firstPrize,
-    secondPrize,
-    thirdPrize,
+    prize,
     department,
     rules,
   } = req.body;
@@ -96,10 +94,7 @@ exports.addEvent = BigPromise(async (req, res, next) => {
   let rulesArray = rules.split("$").filter(Boolean);
   
 
-  let prizeMoney = {}
-  prizeMoney.first=firstPrize
-  prizeMoney.second=secondPrize
-  prizeMoney.third=thirdPrize
+
 
   const event = await Events.create({
     name,
@@ -120,7 +115,7 @@ exports.addEvent = BigPromise(async (req, res, next) => {
       id: result.public_id,
       secure_url: result.secure_url,
     } : null, 
-    prizeMoney,
+    prize,
     department,
     rules: rulesArray,
   });
