@@ -127,22 +127,20 @@ exports.addEvent = BigPromise(async (req, res, next) => {
 });
 
 exports.updateEventPrize = BigPromise(async (req, res, next) => {
-  const { id, first, second, third } = req.body;
+  const { id, prize } = req.body;
   let event = await Events.findById(id);
 
   if (!event) {
     return next(new CustomError("No event found with this id", 401));
   }
 
-  event.prize.first = first;
-  event.prize.second = second;
-  event.prize.third = third;
+  event.prize = prize;
 
   await event.save({ validateBeforeSave: false });
 
   res.status(200).json({
     success: true,
-    message: "Event prizes updated successfully",
+    message: "Event prize updated successfully",
     event,
   });
 });
