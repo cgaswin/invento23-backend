@@ -20,6 +20,13 @@ exports.createOrder = BigPromise(async (req, res, next) => {
     totalAmount,
   } = req.body;
 
+  const orderEventsWithParticipants = orderEvents.map(event => {
+    return {
+      event: event.event,
+      participants: event.participants, // Add participants array here
+    };
+  });
+
   const order = await Order.create({
     name,
     email,
@@ -27,7 +34,7 @@ exports.createOrder = BigPromise(async (req, res, next) => {
     referalCode,
     college,
     year,
-    orderEvents,
+    orderEvents:orderEventsWithParticipants,
     paymentInfo,
     totalAmount,
   });
@@ -70,7 +77,7 @@ async function updateOrder(id) {
     for (const event of order.orderEvents) {
       const id = event.event
       const singleEvent = await Events.findById(id)
-      await updateUser(order.email, singleEvent.name, order.referalCode);
+      await updateUser(order.email, singleEvent.name, event.participants, order.referalCode);
     }
 }
 
@@ -112,10 +119,10 @@ async function updateCampusAmbassador(referalCode) {
   }
 }
 
-async function updateUser(email, eventName, referalCode) {
+async function updateUser(email, eventName,participants, referalCode) {
   const user = await Users.findOne({ email });
   if (user) {
-    user.events.push(eventName);
+    user.events.push({ eventName, participants });
     if (referalCode && !user.referalCodes.includes(referalCode)) {
       user.referalCodes.push(referalCode);
     }

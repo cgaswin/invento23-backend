@@ -31,7 +31,11 @@ const orderSchema = new mongoose.Schema({
         ref: "Events",
         required: true,
       },
-      
+      participants: [
+        {
+          type: String,
+        },
+      ],
     },
   ],
   paymentInfo: {
