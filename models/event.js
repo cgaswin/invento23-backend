@@ -11,7 +11,6 @@ const eventSchema = new mongoose.Schema({
   },
   time:{
     type:String,
-    required:[true,"please provide time for the event"]
   },
   isOnline:{
     type:Boolean,

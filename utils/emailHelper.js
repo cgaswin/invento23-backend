@@ -20,12 +20,12 @@ const mailHelper = async (order, event) => {
   const options = { month: "long", day: "numeric" };
   const dateString = date.toLocaleDateString("en-US", options);
 
-  const formattedTime = time.toLocaleString("en-US", {
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true,
-    timeZone: "UTC"
-  });
+  // const formattedTime = time.toLocaleString("en-US", {
+  //   hour: "numeric",
+  //   minute: "numeric",
+  //   hour12: true,
+  //   timeZone: "UTC"
+  // });
 
 
   let competition, workshop;
@@ -55,9 +55,10 @@ const mailHelper = async (order, event) => {
       .replace("{name}", name)
       .replace("{date}", dateString)
       .replace("{eventName}", eventName)
-      .replace("{time}",formattedTime)
       .replace("{contactNumber}",contactNumber)
       .replace("{rules}", rulesHtml); 
+      // .replace("{time}",formattedTime)
+      
 
 
 
@@ -96,9 +97,9 @@ const mailHelper = async (order, event) => {
       .replace("{name}", name)
       .replace("{date}", dateString)
       .replace("{eventName}", eventName)
-      .replace("{time}",formattedTime)
       .replace("{contactName}",contactName)
       .replace("{contactNumber}",contactNumber);
+      // .replace("{time}",formattedTime)
 
 
 

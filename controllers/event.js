@@ -56,28 +56,11 @@ exports.addEvent = BigPromise(async (req, res, next) => {
     rules,
   } = req.body;
 
-  console.log(name,
-    date,
-    time,
-    isOnline,
-    contactNameFirst,
-    contactNumberFirst,
-    contactNameSecond,
-    contactNumberSecond,
-    regFee,
-    regFeeTeam,
-    eventType,
-    category,
-    isPreEvent,
-    description,
-    firstPrize,
-    secondPrize,
-    thirdPrize,
-    department,
-    rules,)
 
   let file = null;
   let result = null;
+  let eventTime = null;
+  
 
   if (req.files && req.files.photo) {
     file = req.files.photo;
@@ -87,8 +70,8 @@ exports.addEvent = BigPromise(async (req, res, next) => {
   }
 
   
-
-  // Split time string into its components
+  if(time){
+      // Split time string into its components
   const [timeString, period] = time.split(" ");
 
   // Split hours and minutes from timeString
@@ -105,7 +88,9 @@ exports.addEvent = BigPromise(async (req, res, next) => {
 
 
   // Concatenate components back together into a single string
-   const eventTime = `${eventHours}:${minutes}`;
+    eventTime = `${eventHours}:${minutes}`;
+  }
+
    
 
   let rulesArray = rules.split("$").filter(Boolean);
@@ -119,7 +104,7 @@ exports.addEvent = BigPromise(async (req, res, next) => {
   const event = await Events.create({
     name,
     date,
-    time: new Date(`${date}T${eventTime}:00.000Z`), 
+    time: eventTime?new Date(`${date}T${eventTime}:00.000Z`):null, 
     isOnline,
     contactNameFirst,
     contactNumberFirst,
