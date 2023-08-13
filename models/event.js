@@ -41,6 +41,9 @@ const eventSchema = new mongoose.Schema({
     type: String,
     required: [true, "please provide event category eg:workshop"],
   },
+  maxParticipants:{
+    type:Number
+  },
   isPreEvent: {
     type: String,
     required: [true, "Please provide if the event is a pre event"],

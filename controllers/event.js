@@ -47,6 +47,7 @@ exports.addEvent = BigPromise(async (req, res, next) => {
     regFeeTeam,
     eventType,
     category,
+    maxParticipants,
     isPreEvent,
     description,
     prize,
@@ -109,6 +110,7 @@ exports.addEvent = BigPromise(async (req, res, next) => {
     regFeeTeam,
     eventType,
     category,
+    maxParticipants,
     isPreEvent,
     description,
     photo: result ? {
