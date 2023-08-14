@@ -59,6 +59,8 @@ exports.addEvent = BigPromise(async (req, res, next) => {
   let file = null;
   let result = null;
   let eventTime = null;
+
+  const isPreEventBoolean = isPreEvent === "true";
   
 
   if (req.files && req.files.photo) {
@@ -111,7 +113,7 @@ exports.addEvent = BigPromise(async (req, res, next) => {
     eventType,
     category,
     maxParticipants,
-    isPreEvent,
+    isPreEvent:isPreEventBoolean,
     description,
     photo: result ? {
       id: result.public_id,

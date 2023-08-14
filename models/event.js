@@ -45,7 +45,7 @@ const eventSchema = new mongoose.Schema({
     type:Number
   },
   isPreEvent: {
-    type: String,
+    type: Boolean,
     required: [true, "Please provide if the event is a pre event"],
   },
   description: {
