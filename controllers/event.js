@@ -190,10 +190,7 @@ exports.updateEventPhoto = BigPromise(async (req,res,next)=>{
   event.photo.id = picture.public_id;
   event.photo.secure_url = picture.secure_url;
 
-  
 
-  }else{
-    return next(new CustomError("No photo added", 401));
   }
 
   if (req.files && req.files.photoMobile) {
@@ -204,8 +201,6 @@ exports.updateEventPhoto = BigPromise(async (req,res,next)=>{
 
     event.photoMobile.id = mobilePicture.public_id;
   event.photoMobile.secure_url = mobilePicture.secure_url;
-}else{
-  return next(new CustomError("No photo  for mobile added", 401));
 }
 
 await event.save({ validateBeforeSave: false });
