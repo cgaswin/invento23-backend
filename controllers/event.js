@@ -57,7 +57,9 @@ exports.addEvent = BigPromise(async (req, res, next) => {
 
 
   let file = null;
+  let mobileFile = null;
   let result = null;
+  let mobileResult = null;
   let eventTime = null;
 
   const isPreEventBoolean = isPreEvent === "true";
@@ -66,6 +68,13 @@ exports.addEvent = BigPromise(async (req, res, next) => {
   if (req.files && req.files.photo) {
     file = req.files.photo;
     result = await cloudinary.uploader.upload(file.tempFilePath, {
+      folder: "invento23",
+    });
+  }
+
+  if (req.files && req.files.photoMobile) {
+    mobileFile = req.files.photoMobile;
+    mobileResult = await cloudinary.uploader.upload(mobileFile.tempFilePath, {
       folder: "invento23",
     });
   }
@@ -119,6 +128,10 @@ exports.addEvent = BigPromise(async (req, res, next) => {
       id: result.public_id,
       secure_url: result.secure_url,
     } : null, 
+    photoMobile:mobileResult?{
+      id: mobileResult.public_id,
+      secure_url:mobileResult.secure_url
+    }:null,
     prize,
     department,
     rules: rulesArray,
@@ -154,6 +167,11 @@ exports.updateEventPhoto = BigPromise(async (req,res,next)=>{
 
   const{id} = req.body;
   let file = null;
+  let picture = null;
+  let mobileFile = null;
+  let mobilePicture = null;
+
+
 
   let event = await Events.findById(id);
   
@@ -167,14 +185,28 @@ exports.updateEventPhoto = BigPromise(async (req,res,next)=>{
       folder: "invento23",
     });
 
+   
 
   event.photo.id = picture.public_id;
   event.photo.secure_url = picture.secure_url;
+
+  
 
   }else{
     return next(new CustomError("No photo added", 401));
   }
 
+  if (req.files && req.files.photoMobile) {
+    mobileFile = req.files.photoMobile;
+    mobilePicture = await cloudinary.uploader.upload(mobileFile.tempFilePath, {
+      folder: "invento23",
+    });
+
+    event.photoMobile.id = mobilePicture.public_id;
+  event.photoMobile.secure_url = mobilePicture.secure_url;
+}else{
+  return next(new CustomError("No photo  for mobile added", 401));
+}
 
 await event.save({ validateBeforeSave: false });
   

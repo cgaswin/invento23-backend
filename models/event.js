@@ -60,6 +60,14 @@ const eventSchema = new mongoose.Schema({
       type: String,
     },
   },
+  photoMobile: {
+    id: {
+      type: String,
+    },
+    secure_url: {
+      type: String,
+    },
+  },
   prize:{
     type:String,
     default:"0"
