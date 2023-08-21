@@ -41,12 +41,21 @@ const orderSchema = new mongoose.Schema({
   paymentInfo: {
     id: {
       type: String,
-      required: [true, "please provide payment id"],
     },
   },
   totalAmount: {
     type: Number,
     required: [true, "please provide the total amount"],
+  },
+  paymentProof: {
+    id: {
+      type: String,
+      required: [true, "please provide the payment proof"],
+    },
+    secure_url: {
+      type: String,
+      required: [true, "please provide the payment proof"],
+    },
   },
   createdAt: {
     type: Date,

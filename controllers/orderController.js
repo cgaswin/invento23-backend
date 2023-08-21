@@ -18,6 +18,7 @@ exports.createOrder = BigPromise(async (req, res, next) => {
     orderEvents,
     paymentInfo,
     totalAmount,
+    
   } = req.body;
 
   const orderEventsWithParticipants = orderEvents.map(event => {
@@ -26,6 +27,14 @@ exports.createOrder = BigPromise(async (req, res, next) => {
       participants: event.participants, // Add participants array here
     };
   });
+
+  let file = null;
+  if (req.files && req.files.photo) {
+    file = req.files.photo;
+    result = await cloudinary.uploader.upload(file.tempFilePath, {
+      folder: "inventoPayment",
+    });
+  }
 
   const order = await Order.create({
     name,
@@ -37,6 +46,10 @@ exports.createOrder = BigPromise(async (req, res, next) => {
     orderEvents:orderEventsWithParticipants,
     paymentInfo,
     totalAmount,
+    paymentProof: {
+      id: result.public_id,
+      secure_url: result.secure_url,
+    } 
   });
 
   const id = order._id;
