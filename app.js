@@ -21,10 +21,7 @@ app.use(morgan("tiny"))
 //cors
 app.use(
   cors({
-    origin:
-      process.env.ENV === "development"
-        ? "*"
-        : ["https://invento23.com", "https://invento-23.vercel.app/"],
+    origin:'*'
   })
 )
 
