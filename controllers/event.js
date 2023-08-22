@@ -65,16 +65,16 @@ exports.addEvent = BigPromise(async (req, res, next) => {
   const isPreEventBoolean = isPreEvent === "true";
   
 
-  if (req.files && req.files.photo) {
-    file = req.files.photo;
-    result = await cloudinary.uploader.upload(file.tempFilePath, {
+  if (req.files && req.files[0]) {
+    file = req.files[0];
+    result = await cloudinary.uploader.upload(file.path, {
       folder: "invento23",
     });
   }
 
-  if (req.files && req.files.photoMobile) {
-    mobileFile = req.files.photoMobile;
-    mobileResult = await cloudinary.uploader.upload(mobileFile.tempFilePath, {
+  if (req.files && req.files[1]) {
+    mobileFile = req.files[1];
+    mobileResult = await cloudinary.uploader.upload(mobileFile.path, {
       folder: "invento23",
     });
   }
@@ -102,7 +102,7 @@ exports.addEvent = BigPromise(async (req, res, next) => {
   }
 
    
-
+  console.log(rules)
   let rulesArray = rules.split("$").filter(Boolean);
   
 
