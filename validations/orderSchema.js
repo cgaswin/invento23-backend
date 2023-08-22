@@ -7,13 +7,19 @@ module.exports = joi.object({
   referalCode: joi.string(),
   college: joi.string(),
   year: joi.number(),
-  orderEvents: joi.array().items(
-    joi.object({
-      event: joi.string().required(),
-    })
-  ),
+  orderEvents: joi
+    .array()
+    .optional()
+    .items(
+      joi.object({
+        event: joi.string().required(),
+        participants: joi.array().items(joi.string()).optional(),
+      })
+    )
+    .optional(),
   paymentInfo: joi.object({
     id: joi.string().required(),
   }),
   totalAmount: joi.number().required(),
+  paymentProof: joi.any(),
 })
