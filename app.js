@@ -21,10 +21,10 @@ app.use(morgan("tiny"))
 //cors
 app.use(
   cors({
-    origin:'*'
-      //process.env.ENV === "development"
-        //? "*"
-      //  : ["https://invento23.com", "https://invento-23.vercel.app/",'http://localhost:3000'],
+    origin:
+      process.env.ENV === "development"
+        ? "*"
+        : ["https://invento23.com", "https://invento-23.vercel.app/"],
   })
 )
 
@@ -35,12 +35,12 @@ cloudinary.config({
   secure: true,
 })
 
-//app.use(
-  //fileUpload({
-    //useTempFiles: true,
-    //tempFileDir: "/tmp/",
-  //})
-//)
+// app.use(
+//   fileUpload({
+//     useTempFiles: true,
+//     tempFileDir: "/tmp/",
+//   })
+// )
 
 const upload = multer({ dest: "tmp/" })
 
