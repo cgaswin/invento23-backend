@@ -24,6 +24,10 @@ const orderSchema = new mongoose.Schema({
   year: {
     type: Number,
   },
+  referralVerified: {
+    type: Boolean,
+    default: false,
+  },
   orderEvents: [
     {
       event: {

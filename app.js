@@ -6,21 +6,34 @@ const fileUpload = require("express-fileupload")
 const cors = require("cors")
 const rateLimit = require("express-rate-limit")
 const helmet = require("helmet")
+const cloudinary = require("cloudinary").v2
+const multer = require("multer")
 
 const app = express()
 
 app.use(helmet())
 app.use(express.json({ limit: "10kb" }))
 app.use(express.urlencoded({ extended: true }))
+
 app.use(cookieParser())
 app.use(morgan("tiny"))
 
 //cors
 app.use(
   cors({
-    origin: "*",
+    origin:
+      process.env.ENV === "development"
+        ? "*"
+        : ["https://invento23.com", "https://invento-23.vercel.app/"],
   })
 )
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+  secure: true,
+})
 
 app.use(
   fileUpload({
@@ -28,6 +41,10 @@ app.use(
     tempFileDir: "/tmp/",
   })
 )
+
+const upload = multer({ dest: "tmp/" })
+
+module.exports = { upload }
 
 app.set("view engine", "ejs")
 
@@ -48,11 +65,9 @@ app.get("/api/v1/updateevent", (req, res) => {
   res.render("updateEvent")
 })
 
-
-app.get("/api/v1/updatephoto",(req,res)=>{
+app.get("/api/v1/updatephoto", (req, res) => {
   res.render("updateEventPhoto")
 })
-
 
 app.post("/rzp-test", async (req, res, next) => {
   const amountDue = req.body.amount * 100
