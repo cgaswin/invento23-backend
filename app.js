@@ -35,12 +35,12 @@ cloudinary.config({
   secure: true,
 })
 
-app.use(
-  fileUpload({
-    useTempFiles: true,
-    tempFileDir: "/tmp/",
-  })
-)
+//app.use(
+  //fileUpload({
+    //useTempFiles: true,
+    //tempFileDir: "/tmp/",
+  //})
+//)
 
 const upload = multer({ dest: "tmp/" })
 
