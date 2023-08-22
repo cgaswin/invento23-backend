@@ -179,9 +179,9 @@ exports.updateEventPhoto = BigPromise(async (req,res,next)=>{
     return next(new CustomError("No event found with this id", 401));
   }
  
-  if (req.files && req.files.photo) {
-    file = req.files.photo;
-    picture = await cloudinary.uploader.upload(file.tempFilePath, {
+  if (req.files && req.files[0]) {
+    file = req.files[0];
+    picture = await cloudinary.uploader.upload(file.path, {
       folder: "invento23",
     });
 
@@ -193,9 +193,9 @@ exports.updateEventPhoto = BigPromise(async (req,res,next)=>{
 
   }
 
-  if (req.files && req.files.photoMobile) {
-    mobileFile = req.files.photoMobile;
-    mobilePicture = await cloudinary.uploader.upload(mobileFile.tempFilePath, {
+  if (req.files && req.files[1]) {
+    mobileFile = req.files[1];
+    mobilePicture = await cloudinary.uploader.upload(mobileFile.path, {
       folder: "invento23",
     });
 
