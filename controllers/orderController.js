@@ -2,7 +2,6 @@ const Order = require("../models/order")
 const Events = require("../models/event")
 const campusAmbassadors = require("../models/campusAmbassador")
 const Users = require("../models/user")
-const { createUser } = require("../controllers/user")
 const BigPromise = require("../middlewares/bigPromise")
 const CustomError = require("../errors/customError")
 const mailHelper = require("../utils/emailHelper")
@@ -32,6 +31,7 @@ exports.createOrder = BigPromise(async (req, res, next) => {
   let result
   if (req.files && req.files[0]) {
     file = req.files[0]
+    console.log(file)
 
     result = await cloudinary.v2.uploader.upload(file.path, {
       // folder: "inventoPayment",
@@ -84,3 +84,37 @@ exports.getAllOrders = BigPromise(async (req, res, next) => {
     orders,
   })
 })
+
+async function updateEventTicket(eventId) {
+  try {
+    const event = await Events.findById(eventId)
+    event.ticketsBooked = event.ticketsBooked + 1
+    await event.save({ validateBeforeSave: false })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// async function updateCampusAmbassador(referalCode) {
+//   try {
+//     const ambassador = await campusAmbassadors.findOne({ referalCode });
+//     if (!ambassador) {
+//       throw new CustomError("no ambassador found", 401);
+//     }
+//     ambassador.score = ambassador.score + 10;
+//     await ambassador.save({ validateBeforeSave: false });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+
+// async function updateUser(email, eventName,participants, referalCode) {
+//   const user = await Users.findOne({ email });
+//   if (user) {
+//     user.events.push({ eventName, participants });
+//     if (referalCode && !user.referalCodes.includes(referalCode)) {
+//       user.referalCodes.push(referalCode);
+//     }
+//     await user.save({ validateBeforeSave: false });
+//   }
+// }
