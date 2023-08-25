@@ -111,7 +111,7 @@ exports.addEvent = BigPromise(async (req, res, next) => {
   const event = await Events.create({
     name,
     date,
-    time: eventTime?new Date(`${date}T${eventTime}:00.000Z`):null, 
+    time: eventTime ? new Date(`${date} ${eventTime}:00+5:30`) : null, 
     isOnline,
     contactNameFirst,
     contactNumberFirst,
