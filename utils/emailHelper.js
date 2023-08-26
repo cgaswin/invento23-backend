@@ -26,23 +26,19 @@ const mailHelper = async (order, event) => {
   //   hour12: true,
   //   timeZone: "UTC"
   // });
+  
+    // const {rules} = event
+    // let rulesHtml = "";
 
-
-  let competition, workshop;
-
-  if (category == "competitions") {
-    const {rules} = event
-    let rulesHtml = "";
-
-    for (let i =0 ; i < rules.length; i++) {
-      rulesHtml += `<ul style="padding-top: 10px; padding-bottom: 10px;">
-      <li>${rules[i]}</li>
-      </ul>`
-    }
+    // for (let i =0 ; i < rules.length; i++) {
+    //   rulesHtml += `<ul style="padding-top: 10px; padding-bottom: 10px;">
+    //   <li>${rules[i]}</li>
+    //   </ul>`
+    // }
 
     try {
       // Read HTML template file
-      competition = await fs.readFile(
+      mailTemplate = await fs.readFile(
         __dirname + "./index.html",
         "utf-8"
       );
@@ -51,7 +47,7 @@ const mailHelper = async (order, event) => {
       console.error("Error reading HTML template file:", error);
       return "error";
     }
-    const messageHtml = competition
+    const messageHtml = mailTemplate
       .replace("{{name}}", name)
       .replace("{{eventName}}", eventName)
       // .replace("{{date}}", dateString)
@@ -81,7 +77,5 @@ const mailHelper = async (order, event) => {
     }
   }
 
-  
-};
 
 module.exports = mailHelper;
