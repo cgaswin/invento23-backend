@@ -48,8 +48,8 @@ const mailHelper = async (order, event) => {
       return "error";
     }
     const messageHtml = mailTemplate
-      .replace("{{name}}", name)
-      .replace("{{eventName}}", eventName)
+      .replace("{name}", name)
+      .replace("{event}", eventName)
       // .replace("{{date}}", dateString)
       // .replace("{contactNumber}",contactNumber)
       // .replace("{rules}", rulesHtml); 
