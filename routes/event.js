@@ -9,7 +9,7 @@ router.route("/events/create").post(upload.any(),addEvent)
 router.route("/events/update").post(upload.any(),updateEventPrize)
 router.route("/events/updatephoto").post(upload.any(),updateEventPhoto)
 router.route("/events/:id").get(getOneEvent)
-router.route("/events").get(getEvents)
+router.route("/events/:category?").get(getEvents)
 
 
 

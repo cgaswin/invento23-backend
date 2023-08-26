@@ -5,13 +5,11 @@ const CustomError = require("../errors/customError");
 const { isValidObjectId } = require("mongoose");
 
 exports.getEvents = BigPromise(async (req, res, next) => {
-  const { type, category } = req.query;
-  let queryObject = {};
-  if (type) {
-    queryObject.eventType = type;
-  }
-  if (category) {
-    queryObject.category = category;
+  const category = req.query.category;
+  
+  let queryObject = {eventType:category}
+  if(category == undefined||' '){
+    queryObject = {}
   }
 
   let events = await Events.find(queryObject);
