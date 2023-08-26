@@ -52,11 +52,11 @@ const mailHelper = async (order, event) => {
       return "error";
     }
     const messageHtml = competition
-      .replace("{name}", name)
-      .replace("{date}", dateString)
-      .replace("{eventName}", eventName)
-      .replace("{contactNumber}",contactNumber)
-      .replace("{rules}", rulesHtml); 
+      .replace("{{name}}", name)
+      .replace("{{eventName}}", eventName)
+      // .replace("{{date}}", dateString)
+      // .replace("{contactNumber}",contactNumber)
+      // .replace("{rules}", rulesHtml); 
       // .replace("{time}",formattedTime)
       
 
@@ -81,46 +81,7 @@ const mailHelper = async (order, event) => {
     }
   }
 
-  if (category == "workshops") {
-    try {
-      // Read HTML template file
-      workshop = await fs.readFile(
-        __dirname + "/templates/workshop.html",
-        "utf-8"
-      );
-      console.log("html file read successful");
-    } catch (error) {
-      console.error("Error reading HTML template file:", error);
-      return "error";
-    }
-    const messageHtml = workshop
-      .replace("{name}", name)
-      .replace("{date}", dateString)
-      .replace("{eventName}", eventName)
-      .replace("{contactName}",contactName)
-      .replace("{contactNumber}",contactNumber);
-      // .replace("{time}",formattedTime)
-
-
-
-    // Send email with the modified HTML template
-    const message = {
-      to: email,
-      from: {
-        name: "Invento",
-        email: process.env.EMAIL,
-      },
-      subject: `Registration: ${eventName} at INVENTO'23 - ${dateString} - Government Engineering College Palakkad`,
-      html: messageHtml,
-    };
-
-    try {
-      await sgMail.send(message);
-      console.log("email sent");
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  
 };
 
 module.exports = mailHelper;
