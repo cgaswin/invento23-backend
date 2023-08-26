@@ -39,7 +39,7 @@ const mailHelper = async (order, event) => {
     try {
       // Read HTML template file
       mailTemplate = await fs.readFile(
-        __dirname + "./index.html",
+        __dirname + "/index.html",
         "utf-8"
       );
       console.log("html file read successful");
