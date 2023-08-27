@@ -68,7 +68,6 @@ exports.createOrder = BigPromise(async (req, res, next) => {
   for await (const event of order.orderEvents) {
     const id = event.event
     const singleEvent = await Events.findById(id)
-    await updateEventTicket(id)
     await mailHelper(order, singleEvent)
   }
 
@@ -95,6 +94,40 @@ exports.getUnverifiedOrders = BigPromise(async (req, res, next) => {
     orders,
   })
 })
+
+exports.verifyOrder = BigPromise(async (req, res, next) => {
+  const id = req.body
+  const order = await Order.findById(id)
+  console.log(order)
+  if(order){
+    order.orderVerified = true
+    await order.save({ validateBeforeSave: false })
+    if (referalCode && referralVerified === true) {
+      const ambassador = await campusAmbassadors.findOne({ referalCode })
+  
+      if (ambassador) {
+        ambassador.score = ambassador.score + 10
+        await ambassador.save({ validateBeforeSave: false })
+      }
+    }
+
+
+    for await (const event of order.orderEvents) {
+      const id = event.event
+      await updateEventTicket(id)
+      //const singleEvent = await Events.findById(id)
+      //await mailHelper(order, singleEvent)
+    }
+   res.status(200).json({
+    message:"Order verified successfully"
+   })
+
+  }else{
+    return next(new CustomError("No order found with this id", 401));
+  }
+})
+
+
 
 async function updateEventTicket(eventId) {
   try {
