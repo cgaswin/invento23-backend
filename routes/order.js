@@ -5,7 +5,7 @@ const orderSchema = require("../validations/orderSchema")
 
 const { upload } = require("../app")
 
-const { createOrder, getAllOrders } = require("../controllers/orderController")
+const { createOrder, getAllOrders,getUnverifiedOrders } = require("../controllers/orderController")
 
 router.route("/orders").get(getAllOrders)
 router.route("/order/create").post(
@@ -20,5 +20,5 @@ router.route("/order/create").post(
   validation(orderSchema),
   createOrder
 )
-
+router.route("/orders/unverified").get(getUnverifiedOrders)
 module.exports = router

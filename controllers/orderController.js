@@ -63,6 +63,8 @@ exports.createOrder = BigPromise(async (req, res, next) => {
       await order.save({ validateBeforeSave: false })
     }
   }
+
+
   for await (const event of order.orderEvents) {
     const id = event.event
     const singleEvent = await Events.findById(id)
@@ -78,6 +80,15 @@ exports.createOrder = BigPromise(async (req, res, next) => {
 
 exports.getAllOrders = BigPromise(async (req, res, next) => {
   let orders = await Order.find()
+
+  res.status(200).json({
+    success: true,
+    orders,
+  })
+})
+
+exports.getUnverifiedOrders = BigPromise(async (req, res, next) => {
+  let orders = await Order.find({ orderVerified: false })
 
   res.status(200).json({
     success: true,
