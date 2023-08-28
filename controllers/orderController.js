@@ -7,6 +7,7 @@ const CustomError = require("../errors/customError")
 const mailHelper = require("../utils/emailHelper")
 const cloudinary = require("cloudinary")
 const order = require("../models/order")
+const mongoose = require("mongoose")
 
 exports.createOrder = BigPromise(async (req, res, next) => {
   const {
@@ -103,6 +104,11 @@ exports.getUnverifiedOrders = BigPromise(async (req, res, next) => {
 
 exports.verifyOrder = BigPromise(async (req, res, next) => {
   const {id} = req.body
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    // The provided id is not a valid ObjectId
+    res.status(400).json({ message: "No order found with this id",status:false });
+    return next(new CustomError("No order found with this id", 401));
+  }
   const order = await Order.findById(id)
   
   if(order){
