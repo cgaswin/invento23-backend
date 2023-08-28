@@ -6,6 +6,7 @@ const BigPromise = require("../middlewares/bigPromise")
 const CustomError = require("../errors/customError")
 const mailHelper = require("../utils/emailHelper")
 const cloudinary = require("cloudinary")
+const order = require("../models/order")
 
 exports.createOrder = BigPromise(async (req, res, next) => {
   const {
@@ -87,11 +88,13 @@ exports.getAllOrders = BigPromise(async (req, res, next) => {
 })
 
 exports.getUnverifiedOrders = BigPromise(async (req, res, next) => {
-  let orders = await Order.find({ orderVerified: false })
+  
+  let orders = await Order.find({ orderVerified: false }).populate("orderEvents.event")
 
   res.status(200).json({
     success: true,
     orders,
+    
   })
 })
 
