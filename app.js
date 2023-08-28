@@ -14,6 +14,7 @@ const app = express()
 app.use(helmet())
 app.use(express.json({ limit: "10kb" }))
 app.use(express.urlencoded({ extended: true }))
+app.set('trust proxy', true);
 
 app.use(cookieParser())
 app.use(morgan("tiny"))
@@ -21,10 +22,7 @@ app.use(morgan("tiny"))
 //cors
 app.use(
   cors({
-    origin:
-      process.env.ENV === "development"
-        ? "*"
-        : ["https://invento23.com", "https://invento-23.vercel.app/"],
+    origin:'*'
   })
 )
 
@@ -35,12 +33,12 @@ cloudinary.config({
   secure: true,
 })
 
-app.use(
-  fileUpload({
-    useTempFiles: true,
-    tempFileDir: "/tmp/",
-  })
-)
+// app.use(
+//   fileUpload({
+//     useTempFiles: true,
+//     tempFileDir: "/tmp/",
+//   })
+// )
 
 const upload = multer({ dest: "tmp/" })
 

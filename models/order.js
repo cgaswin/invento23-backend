@@ -28,6 +28,10 @@ const orderSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  orderVerified:{
+    type:Boolean,
+    default:false
+  },
   orderEvents: [
     {
       event: {

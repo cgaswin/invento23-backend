@@ -5,16 +5,16 @@ const CustomError = require("../errors/customError");
 const { isValidObjectId } = require("mongoose");
 
 exports.getEvents = BigPromise(async (req, res, next) => {
-  const { type, category } = req.query;
-  let queryObject = {};
-  if (type) {
-    queryObject.eventType = type;
-  }
-  if (category) {
-    queryObject.category = category;
+  const category = req.query.category;
+  
+  let queryObject = {eventType:category}
+  if(category == undefined){
+    queryObject = {}
   }
 
+  console.log(queryObject)
   let events = await Events.find(queryObject);
+  console.log(events.length)
   return res.status(200).json({
     success: true,
     events,
@@ -65,16 +65,16 @@ exports.addEvent = BigPromise(async (req, res, next) => {
   const isPreEventBoolean = isPreEvent === "true";
   
 
-  if (req.files && req.files.photo) {
-    file = req.files.photo;
-    result = await cloudinary.uploader.upload(file.tempFilePath, {
+  if (req.files && req.files[0]) {
+    file = req.files[0];
+    result = await cloudinary.uploader.upload(file.path, {
       folder: "invento23",
     });
   }
 
-  if (req.files && req.files.photoMobile) {
-    mobileFile = req.files.photoMobile;
-    mobileResult = await cloudinary.uploader.upload(mobileFile.tempFilePath, {
+  if (req.files && req.files[1]) {
+    mobileFile = req.files[1];
+    mobileResult = await cloudinary.uploader.upload(mobileFile.path, {
       folder: "invento23",
     });
   }
@@ -102,7 +102,7 @@ exports.addEvent = BigPromise(async (req, res, next) => {
   }
 
    
-
+  console.log(rules)
   let rulesArray = rules.split("$").filter(Boolean);
   
 
@@ -111,7 +111,7 @@ exports.addEvent = BigPromise(async (req, res, next) => {
   const event = await Events.create({
     name,
     date,
-    time: eventTime?new Date(`${date}T${eventTime}:00.000Z`):null, 
+    time: eventTime ? new Date(`${date} ${eventTime}:00+5:30`) : null, 
     isOnline,
     contactNameFirst,
     contactNumberFirst,
@@ -179,9 +179,9 @@ exports.updateEventPhoto = BigPromise(async (req,res,next)=>{
     return next(new CustomError("No event found with this id", 401));
   }
  
-  if (req.files && req.files.photo) {
-    file = req.files.photo;
-    picture = await cloudinary.uploader.upload(file.tempFilePath, {
+  if (req.files && req.files[0]) {
+    file = req.files[0];
+    picture = await cloudinary.uploader.upload(file.path, {
       folder: "invento23",
     });
 
@@ -193,9 +193,9 @@ exports.updateEventPhoto = BigPromise(async (req,res,next)=>{
 
   }
 
-  if (req.files && req.files.photoMobile) {
-    mobileFile = req.files.photoMobile;
-    mobilePicture = await cloudinary.uploader.upload(mobileFile.tempFilePath, {
+  if (req.files && req.files[1]) {
+    mobileFile = req.files[1];
+    mobilePicture = await cloudinary.uploader.upload(mobileFile.path, {
       folder: "invento23",
     });
 
