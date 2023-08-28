@@ -21,6 +21,8 @@ exports.createOrder = BigPromise(async (req, res, next) => {
     totalAmount,
   } = req.body
 
+  console.log(orderEvents)
+
   const orderEventsWithParticipants = orderEvents.map((event) => {
     return {
       event: event.event,
@@ -28,11 +30,12 @@ exports.createOrder = BigPromise(async (req, res, next) => {
     }
   })
 
+  console.log(orderEventsWithParticipants)
+
   let file = null
   let result
   if (req.files && req.files[0]) {
     file = req.files[0]
-    console.log(file)
 
     result = await cloudinary.v2.uploader.upload(file.path, {
       // folder: "inventoPayment",
@@ -100,9 +103,8 @@ exports.getUnverifiedOrders = BigPromise(async (req, res, next) => {
 
 exports.verifyOrder = BigPromise(async (req, res, next) => {
   const {id} = req.body
-  console.log(id)
   const order = await Order.findById(id)
-  console.log(order)
+  
   if(order){
     order.orderVerified = true
     await order.save({ validateBeforeSave: false })
@@ -124,10 +126,15 @@ exports.verifyOrder = BigPromise(async (req, res, next) => {
       await mailHelper(order, singleEvent,"verified")
     }
    res.status(200).json({
-    message:"Order verified successfully"
+    message:"Order verified successfully",
+    status:true
    })
 
   }else{
+    res.status(401).json({
+      message:"No order found with this id",
+      status:false
+    })
     return next(new CustomError("No order found with this id", 401));
   }
 })
