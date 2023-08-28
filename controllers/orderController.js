@@ -101,7 +101,7 @@ exports.getUnverifiedOrders = BigPromise(async (req, res, next) => {
 exports.verifyOrder = BigPromise(async (req, res, next) => {
   const {id} = req.body
   console.log(id)
-  const order = await Order.findById(id).populate("referalCode")
+  const order = await Order.findById(id)
   console.log(order)
   if(order){
     order.orderVerified = true
