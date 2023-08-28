@@ -13,7 +13,10 @@ module.exports = joi.object({
     .items(
       joi.object({
         event: joi.string().required(),
-        participants: joi.array().items(joi.string()).optional(),
+        participants: joi
+          .array()
+          .items(joi.string().allow(null, ""))
+          .optional(),
       })
     )
     .optional(),
