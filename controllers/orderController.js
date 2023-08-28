@@ -69,7 +69,7 @@ exports.createOrder = BigPromise(async (req, res, next) => {
   for await (const event of order.orderEvents) {
     const id = event.event
     const singleEvent = await Events.findById(id)
-    await mailHelper(order, singleEvent)
+    await mailHelper(order, singleEvent,"unverified")
   }
 
   res.status(200).json({
@@ -99,13 +99,14 @@ exports.getUnverifiedOrders = BigPromise(async (req, res, next) => {
 })
 
 exports.verifyOrder = BigPromise(async (req, res, next) => {
-  const id = req.body
-  const order = await Order.findById(id)
+  const {id} = req.body
+  console.log(id)
+  const order = await Order.findById(id).populate("referalCode")
   console.log(order)
   if(order){
     order.orderVerified = true
     await order.save({ validateBeforeSave: false })
-    if (referalCode && referralVerified === true) {
+    if (order.referalCode && order.referralVerified === true) {
       const ambassador = await campusAmbassadors.findOne({ referalCode })
   
       if (ambassador) {
@@ -118,8 +119,8 @@ exports.verifyOrder = BigPromise(async (req, res, next) => {
     for await (const event of order.orderEvents) {
       const id = event.event
       await updateEventTicket(id)
-      //const singleEvent = await Events.findById(id)
-      //await mailHelper(order, singleEvent)
+      const singleEvent = await Events.findById(id)
+      await mailHelper(order, singleEvent,"verified")
     }
    res.status(200).json({
     message:"Order verified successfully"
