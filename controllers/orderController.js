@@ -106,8 +106,9 @@ exports.verifyOrder = BigPromise(async (req, res, next) => {
   if(order){
     order.orderVerified = true
     await order.save({ validateBeforeSave: false })
+    
     if (order.referalCode && order.referralVerified === true) {
-      const ambassador = await campusAmbassadors.findOne({ referalCode })
+      const ambassador = await campusAmbassadors.findOne({ referalCode:order.referalCode })
   
       if (ambassador) {
         ambassador.score = ambassador.score + 10
