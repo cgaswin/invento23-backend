@@ -66,7 +66,7 @@ const mailHelper = async (order, event,type) => {
           name: "Invento",
           email: process.env.EMAIL,
         },
-        subject: `Confirmation of Registration: ${eventName} at INVENTO'23 - ${dateString} - Government Engineering College Palakkad`,
+        subject: `Registration Received | INVENTO'23`,
         html: messageHtml,
       };
   
@@ -107,7 +107,7 @@ const mailHelper = async (order, event,type) => {
           name: "Invento",
           email: process.env.EMAIL,
         },
-        subject: `Confirmation of Registration: ${eventName} at INVENTO'23 - ${dateString} - Government Engineering College Palakkad`,
+        subject: `Payment Verified : ${eventName} | INVENTO'23`,
         html: messageHtml,
       };
   
