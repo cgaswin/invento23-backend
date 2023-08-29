@@ -102,6 +102,16 @@ exports.getUnverifiedOrders = BigPromise(async (req, res, next) => {
   })
 })
 
+exports.getVerifiedOrders = BigPromise(async (req, res, next) => {
+    
+    let orders = await Order.find({ orderVerified: true }).populate("orderEvents.event")
+  
+    res.status(200).json({
+      success: true,
+      orders,
+    })
+})
+
 exports.verifyOrder = BigPromise(async (req, res, next) => {
   const {id} = req.body
   if (!mongoose.Types.ObjectId.isValid(id)) {
