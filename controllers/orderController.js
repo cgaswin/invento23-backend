@@ -91,6 +91,25 @@ exports.getAllOrders = BigPromise(async (req, res, next) => {
   })
 })
 
+exports.getOrdersForEvent = BigPromise(async(req,res,next)=>{
+  const {id} = req.params;
+  if(mongoose.isValidObjectId(id)){
+    let event = await Events.findById(id);
+    if(event){
+      let orders = await Order.find({"orderEvents.event":id});
+      res.status(200).json({
+        count:orders.length,
+        data:orders
+      })
+    }
+  }else{
+    res.status(404).json({
+      message:"Event not found"
+    })
+  }
+
+})
+
 exports.getUnverifiedOrders = BigPromise(async (req, res, next) => {
   
   let orders = await Order.find({ orderVerified: false }).populate("orderEvents.event")
@@ -166,27 +185,3 @@ async function updateEventTicket(eventId) {
     console.log(error)
   }
 }
-
-// async function updateCampusAmbassador(referalCode) {
-//   try {
-//     const ambassador = await campusAmbassadors.findOne({ referalCode });
-//     if (!ambassador) {
-//       throw new CustomError("no ambassador found", 401);
-//     }
-//     ambassador.score = ambassador.score + 10;
-//     await ambassador.save({ validateBeforeSave: false });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
-
-// async function updateUser(email, eventName,participants, referalCode) {
-//   const user = await Users.findOne({ email });
-//   if (user) {
-//     user.events.push({ eventName, participants });
-//     if (referalCode && !user.referalCodes.includes(referalCode)) {
-//       user.referalCodes.push(referalCode);
-//     }
-//     await user.save({ validateBeforeSave: false });
-//   }
-// }
