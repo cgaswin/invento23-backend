@@ -69,11 +69,10 @@ exports.createOrder = BigPromise(async (req, res, next) => {
     }
   }
 
-
   for await (const event of order.orderEvents) {
     const id = event.event
     const singleEvent = await Events.findById(id)
-    await mailHelper(order, singleEvent,"unverified")
+    await mailHelper(order, singleEvent, "unverified")
   }
 
   res.status(200).json({
@@ -111,13 +110,13 @@ exports.getOrdersForEvent = BigPromise(async(req,res,next)=>{
 })
 
 exports.getUnverifiedOrders = BigPromise(async (req, res, next) => {
-  
-  let orders = await Order.find({ orderVerified: false }).populate("orderEvents.event")
+  let orders = await Order.find({ orderVerified: false }).populate(
+    "orderEvents.event"
+  )
 
   res.status(200).json({
     success: true,
     orders,
-    
   })
 })
 
@@ -132,49 +131,49 @@ exports.getVerifiedOrders = BigPromise(async (req, res, next) => {
 })
 
 exports.verifyOrder = BigPromise(async (req, res, next) => {
-  const {id} = req.body
+  const { id } = req.body
   if (!mongoose.Types.ObjectId.isValid(id)) {
     // The provided id is not a valid ObjectId
-    res.status(400).json({ message: "No order found with this id",status:false });
-    return next(new CustomError("No order found with this id", 401));
+    res
+      .status(400)
+      .json({ message: "No order found with this id", status: false })
+    return next(new CustomError("No order found with this id", 401))
   }
   const order = await Order.findById(id)
-  
-  if(order){
+
+  if (order) {
     order.orderVerified = true
     await order.save({ validateBeforeSave: false })
-    
+
     if (order.referalCode && order.referralVerified === true) {
-      const ambassador = await campusAmbassadors.findOne({ referalCode:order.referalCode })
-  
+      const ambassador = await campusAmbassadors.findOne({
+        referalCode: order.referalCode,
+      })
+
       if (ambassador) {
         ambassador.score = ambassador.score + 10
         await ambassador.save({ validateBeforeSave: false })
       }
     }
 
-
-    for await (const event of order.orderEvents) {
-      const id = event.event
-      await updateEventTicket(id)
-      const singleEvent = await Events.findById(id)
-      await mailHelper(order, singleEvent,"verified")
-    }
-   res.status(200).json({
-    message:"Order verified successfully",
-    status:true
-   })
-
-  }else{
-    res.status(401).json({
-      message:"No order found with this id",
-      status:false
+    // for await (const event of order.orderEvents) {
+    //   const id = event.event
+    //   await updateEventTicket(id)
+    //   const singleEvent = await Events.findById(id)
+    //   await mailHelper(order, singleEvent,"verified")
+    // }
+    res.status(200).json({
+      message: "Order verified successfully",
+      status: true,
     })
-    return next(new CustomError("No order found with this id", 401));
+  } else {
+    res.status(401).json({
+      message: "No order found with this id",
+      status: false,
+    })
+    return next(new CustomError("No order found with this id", 401))
   }
 })
-
-
 
 async function updateEventTicket(eventId) {
   try {
