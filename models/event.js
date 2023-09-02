@@ -83,6 +83,10 @@ const eventSchema = new mongoose.Schema({
     type:Number,
     default:0
   },
+  isAvailable:{
+    type:Boolean,
+    default:false
+  },
   createdAt: {
     type: Date,
     default: Date.now,
