@@ -31,17 +31,65 @@ exports.createOrder = BigPromise(async (req, res, next) => {
     }
   })
 
-  console.log(orderEventsWithParticipants)
+  const parsedAmount = parseInt(totalAmount)
+
+  // console.log("Total Amount", parsedAmount, typeof totalAmount)
+
+  // console.log(orderEventsWithParticipants)
+
+  if (parsedAmount === 0) {
+    const order = await Order.create({
+      name,
+      email,
+      phone,
+      referalCode,
+      college,
+      year,
+      orderEvents: orderEventsWithParticipants,
+      paymentInfo,
+      totalAmount,
+    })
+
+    if (referalCode) {
+      const ambassador = await campusAmbassadors.findOne({ referalCode })
+
+      if (ambassador) {
+        order.referralVerified = true
+        await order.save({ validateBeforeSave: false })
+      }
+    }
+
+    for await (const event of order.orderEvents) {
+      const id = event.event
+      const singleEvent = await Events.findById(id)
+      await mailHelper(order, singleEvent, "unverified")
+    }
+
+    res.status(200).json({
+      success: true,
+      order,
+    })
+    return
+  }
 
   let file = null
   let result
   if (req.files && req.files[0]) {
     file = req.files[0]
 
-    result = await cloudinary.v2.uploader.upload(file.path, {
-      // folder: "inventoPayment",
-      folder: "InventoVerifyPayment",
-    })
+    try {
+      result = await cloudinary.v2.uploader.upload(file.path, {
+        // folder: "inventoPayment",
+        folder: "InventoVerifyPayment",
+      })
+    } catch (error) {
+      console.log(error)
+      return next(new CustomError("Error uploading payment proof", 500))
+    }
+  }
+
+  if (!result) {
+    return next(new CustomError("Error uploading payment proof", 500))
   }
 
   const order = await Order.create({
@@ -90,23 +138,22 @@ exports.getAllOrders = BigPromise(async (req, res, next) => {
   })
 })
 
-exports.getOrdersForEvent = BigPromise(async(req,res,next)=>{
-  const {id} = req.params;
-  if(mongoose.isValidObjectId(id)){
-    let event = await Events.findById(id);
-    if(event){
-      let orders = await Order.find({"orderEvents.event":id});
+exports.getOrdersForEvent = BigPromise(async (req, res, next) => {
+  const { id } = req.params
+  if (mongoose.isValidObjectId(id)) {
+    let event = await Events.findById(id)
+    if (event) {
+      let orders = await Order.find({ "orderEvents.event": id })
       res.status(200).json({
-        count:orders.length,
-        data:orders
+        count: orders.length,
+        data: orders,
       })
     }
-  }else{
+  } else {
     res.status(404).json({
-      message:"Event not found"
+      message: "Event not found",
     })
   }
-
 })
 
 exports.getUnverifiedOrders = BigPromise(async (req, res, next) => {
@@ -121,13 +168,14 @@ exports.getUnverifiedOrders = BigPromise(async (req, res, next) => {
 })
 
 exports.getVerifiedOrders = BigPromise(async (req, res, next) => {
-    
-    let orders = await Order.find({ orderVerified: true }).populate("orderEvents.event")
-  
-    res.status(200).json({
-      success: true,
-      orders,
-    })
+  let orders = await Order.find({ orderVerified: true }).populate(
+    "orderEvents.event"
+  )
+
+  res.status(200).json({
+    success: true,
+    orders,
+  })
 })
 
 exports.verifyOrder = BigPromise(async (req, res, next) => {

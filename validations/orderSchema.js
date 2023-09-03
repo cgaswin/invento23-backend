@@ -20,9 +20,21 @@ module.exports = joi.object({
       })
     )
     .optional(),
-  paymentInfo: joi.object({
-    id: joi.string().required(),
+  // paymentInfo: joi.object({
+  //   id: joi.string().required(),
+  // }),
+  paymenetInfo: joi.any().when("totalAmount", {
+    is: 0,
+    then: joi.forbidden(),
+    otherwise: joi.object({
+      id: joi.string().required(),
+    }),
   }),
   totalAmount: joi.number().required(),
-  paymentProof: joi.any(),
+  // paymentProof: joi.any(),
+  paymentProof: joi.any().when("totalAmount", {
+    is: 0,
+    then: joi.forbidden(),
+    otherwise: joi.any(),
+  }),
 })

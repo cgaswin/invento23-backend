@@ -28,9 +28,9 @@ const orderSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  orderVerified:{
-    type:Boolean,
-    default:false
+  orderVerified: {
+    type: Boolean,
+    default: false,
   },
   orderEvents: [
     {
@@ -55,19 +55,28 @@ const orderSchema = new mongoose.Schema({
     type: Number,
     required: [true, "please provide the total amount"],
   },
-  paymentProof: {
-    id: {
-      type: String,
-      required: [true, "please provide the payment proof"],
-    },
-    secure_url: {
-      type: String,
-      required: [true, "please provide the payment proof"],
-    },
-  },
+  // paymentProof: {
+  //   id: {
+  //     type: String,
+  //     required: [true, "please provide the payment proof"],
+  //   },
+  //   secure_url: {
+  //     type: String,
+  //     required: [true, "please provide the payment proof"],
+  //   },
+  // },
   createdAt: {
     type: Date,
     default: Date.now(),
+  },
+
+  paymentProof: {
+    id: {
+      type: String,
+    },
+    secure_url: {
+      type: String,
+    },
   },
 })
 

@@ -8,7 +8,8 @@ const validation = (schema) => {
       const errorMessage = error.details
         .map((detail) => detail.message)
         .join(",")
-      return next(new CustomError(errorMessage, 400))
+      const err = new CustomError(errorMessage, 400)
+      CustomError.respond(err, res)
     }
     next()
   }

@@ -50,7 +50,7 @@ async function restoreDb(dbName) {
   console.info("Starting restore.....")
 
   // flush existing data
-  const flushCmd = `mongo "${dbUri}" --eval "db.dropDatabase()"`
+  const flushCmd = `mongosh "${dbUri}" --eval "use ${dbName}" --eval "db.dropDatabase()"`
   console.log(`Running command: ${flushCmd}`)
   try {
     const { stdout, stderr } = await exec(flushCmd)
@@ -61,7 +61,7 @@ async function restoreDb(dbName) {
     process.exit(1)
   }
 
-  const cmd = `mongorestore --uri="${dbUri}" --db="${dbName}" --drop`
+  const cmd = `mongorestore`
 
   console.log(`Running command: ${cmd}`)
   try {
