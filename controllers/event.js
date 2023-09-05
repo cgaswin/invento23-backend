@@ -15,8 +15,16 @@ exports.getEvents = BigPromise(async (req, res, next) => {
   console.log(queryObject)
   let events = await Events.find(queryObject)
   console.log(events.length)
+
+  if (!events.length) {
+    const err = new CustomError("No events found", 404)
+    CustomError.respond(err, res)
+    next(err)
+  }
+
   return res.status(200).json({
     success: true,
+    count: events.length,
     events,
   })
 })
