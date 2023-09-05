@@ -80,7 +80,6 @@ exports.createOrder = BigPromise(async (req, res, next) => {
     try {
       result = await cloudinary.v2.uploader.upload(file.path, {
         // folder: "inventoPayment",
-        // folder: "InventoVerifyPayment",
         folder:
           process.env.NODE_ENV === "production"
             ? "InventoVerifyPayment"
