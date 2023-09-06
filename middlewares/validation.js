@@ -10,8 +10,9 @@ const validation = (schema) => {
         .join(",")
       const err = new CustomError(errorMessage, 400)
       CustomError.respond(err, res)
+      throw err
     }
-    next()
+    // next()
   }
 }
 
