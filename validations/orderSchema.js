@@ -17,6 +17,10 @@ module.exports = joi.object({
           .array()
           .items(joi.string().allow(null, ""))
           .optional(),
+        name: joi.string().optional(),
+        type: joi.string().optional(),
+        price: joi.number().optional(),
+        ticketCount: joi.number().optional(),
       })
     )
     .optional(),
@@ -37,4 +41,5 @@ module.exports = joi.object({
     then: joi.forbidden(),
     otherwise: joi.any(),
   }),
+  ticketCount: joi.number().optional(),
 })

@@ -20,6 +20,7 @@ exports.createOrder = BigPromise(async (req, res, next) => {
     orderEvents,
     paymentInfo,
     totalAmount,
+    ticketsBooked,
   } = req.body
 
   console.log(orderEvents)
@@ -28,6 +29,10 @@ exports.createOrder = BigPromise(async (req, res, next) => {
     return {
       event: event.event,
       participants: event.participants, // Add participants array here
+      name: event.name,
+      type: event.type,
+      price: event.price,
+      ticketCount: event.ticketCount,
     }
   })
 
