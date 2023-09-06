@@ -63,11 +63,12 @@ exports.createOrder = BigPromise(async (req, res, next) => {
         await order.save({ validateBeforeSave: false })
       }
     }
-
-    for await (const event of order.orderEvents) {
-      const id = event.event
-      const singleEvent = await Events.findById(id)
-      await mailHelper(order, singleEvent, "unverified")
+    if (process.env.NODE_ENV === "production") {
+      for await (const event of order.orderEvents) {
+        const id = event.event
+        const singleEvent = await Events.findById(id)
+        await mailHelper(order, singleEvent, "unverified")
+      }
     }
 
     res.status(200).json({
@@ -125,10 +126,12 @@ exports.createOrder = BigPromise(async (req, res, next) => {
     }
   }
 
-  for await (const event of order.orderEvents) {
-    const id = event.event
-    const singleEvent = await Events.findById(id)
-    await mailHelper(order, singleEvent, "unverified")
+  if (process.env.NODE_ENV === "production") {
+    for await (const event of order.orderEvents) {
+      const id = event.event
+      const singleEvent = await Events.findById(id)
+      await mailHelper(order, singleEvent, "unverified")
+    }
   }
 
   res.status(200).json({
