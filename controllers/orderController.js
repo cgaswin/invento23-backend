@@ -215,12 +215,13 @@ exports.verifyOrder = BigPromise(async (req, res, next) => {
       }
     }
 
-    // for await (const event of order.orderEvents) {
-    //   const id = event.event
-    //   await updateEventTicket(id)
-    //   const singleEvent = await Events.findById(id)
-    //   await mailHelper(order, singleEvent,"verified")
-    // }
+    for await (const event of order.orderEvents) {
+      const id = event.event
+      await updateEventTicket(id)
+      const singleEvent = await Events.findById(id)
+      await mailHelper(order, singleEvent,"verified")
+    }
+    
     res.status(200).json({
       message: "Order verified successfully",
       status: true,
