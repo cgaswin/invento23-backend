@@ -12,7 +12,7 @@ const validation = (schema) => {
       CustomError.respond(err, res)
       throw err
     }
-    // next()
+    next()
   }
 }
 
