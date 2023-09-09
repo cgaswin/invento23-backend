@@ -130,7 +130,7 @@ exports.createOrder = BigPromise(async (req, res, next) => {
     for await (const event of order.orderEvents) {
       const id = event.event
       const singleEvent = await Events.findById(id)
-      await mailHelper(order, singleEvent, "unverified")
+      //await mailHelper(order, singleEvent, "unverified")
     }
   }
 
