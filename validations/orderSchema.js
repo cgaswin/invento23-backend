@@ -6,7 +6,7 @@ module.exports = joi.object({
   phone: joi.number().required(),
   referalCode: joi.string(),
   college: joi.string(),
-  year: joi.number(),
+  year: joi.number().optional(),
   orderEvents: joi
     .array()
     .optional()
