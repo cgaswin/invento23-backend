@@ -1,10 +1,13 @@
-const Order = require("../models/order")
+const { Order } = require("../models/order")
 const Events = require("../models/event")
 const campusAmbassadors = require("../models/campusAmbassador")
 const Users = require("../models/user")
 const BigPromise = require("../middlewares/bigPromise")
 const CustomError = require("../errors/customError")
-const mailHelper = require("../utils/emailHelper")
+const {
+  mailHelper,
+  sendMailForVerifiedProshow,
+} = require("../utils/emailHelper")
 const cloudinary = require("cloudinary")
 const order = require("../models/order")
 const mongoose = require("mongoose")
@@ -26,14 +29,20 @@ exports.createOrder = BigPromise(async (req, res, next) => {
   console.log(orderEvents)
 
   const orderEventsWithParticipants = orderEvents.map((event) => {
-    return {
+    const e = {
       event: event.event,
       participants: event.participants, // Add participants array here
       name: event.name,
       type: event.type,
       price: event.price,
-      ticketCount: event.ticketCount,
     }
+
+    if (event.type === "proshow") {
+      e.ticketCount = event.ticketCount
+      return e
+    }
+
+    return e
   })
 
   const parsedAmount = parseInt(totalAmount)
@@ -116,6 +125,8 @@ exports.createOrder = BigPromise(async (req, res, next) => {
       secure_url: result.secure_url,
     },
   })
+
+  console.log("Order", order)
 
   if (referalCode) {
     const ambassador = await campusAmbassadors.findOne({ referalCode })
@@ -201,6 +212,9 @@ exports.verifyOrder = BigPromise(async (req, res, next) => {
   const order = await Order.findById(id)
 
   if (order) {
+    console.log("Order to verify", order)
+
+    // return
     order.orderVerified = true
     await order.save({ validateBeforeSave: false })
 
@@ -215,12 +229,22 @@ exports.verifyOrder = BigPromise(async (req, res, next) => {
       }
     }
 
-    // for await (const event of order.orderEvents) {
-    //   const id = event.event
-    //   await updateEventTicket(id)
-    //   const singleEvent = await Events.findById(id)
-    //   await mailHelper(order, singleEvent,"verified")
-    // }
+    for (const event of order.orderEvents) {
+      const id = event.event
+      await updateEventTicket(id)
+      const singleEvent = await Events.findById(id)
+      if (singleEvent.eventType === "proshow") {
+        await sendMailForVerifiedProshow({
+          email: order.email,
+          eventName: singleEvent.name,
+          uniqueId: event.uniqueId,
+          eventDate: singleEvent.date,
+        })
+      } else {
+        await mailHelper(order, singleEvent, "verified")
+      }
+    }
+
     res.status(200).json({
       message: "Order verified successfully",
       status: true,

@@ -1,5 +1,40 @@
 const mongoose = require("mongoose")
 const validator = require("validator")
+const { nanoid } = require("nanoid")
+
+const orderedEventsSchema = new mongoose.Schema(
+  {
+    event: {
+      type: mongoose.Schema.ObjectId,
+      ref: "Events",
+      required: true,
+    },
+    participants: [
+      {
+        type: String,
+      },
+    ],
+    name: {
+      type: String,
+    },
+    price: {
+      type: Number,
+    },
+  },
+  { discriminatorKey: "type" }
+)
+
+const orderedProshowSchema = new mongoose.Schema({
+  uniqueId: {
+    type: String,
+    required: true,
+    default: () => nanoid(6),
+    index: { unique: true },
+  },
+  ticketCount: {
+    type: Number,
+  },
+})
 
 const orderSchema = new mongoose.Schema({
   name: {
@@ -32,32 +67,7 @@ const orderSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  orderEvents: [
-    {
-      event: {
-        type: mongoose.Schema.ObjectId,
-        ref: "Events",
-        required: true,
-      },
-      participants: [
-        {
-          type: String,
-        },
-      ],
-      name: {
-        type: String,
-      },
-      type: {
-        type: String,
-      },
-      price: {
-        type: Number,
-      },
-      ticketCount: {
-        type: Number,
-      },
-    },
-  ],
+  orderEvents: [orderedEventsSchema],
   paymentInfo: {
     id: {
       type: String,
@@ -67,16 +77,6 @@ const orderSchema = new mongoose.Schema({
     type: Number,
     required: [true, "please provide the total amount"],
   },
-  // paymentProof: {
-  //   id: {
-  //     type: String,
-  //     required: [true, "please provide the payment proof"],
-  //   },
-  //   secure_url: {
-  //     type: String,
-  //     required: [true, "please provide the payment proof"],
-  //   },
-  // },
   createdAt: {
     type: Date,
     default: Date.now(),
@@ -92,4 +92,9 @@ const orderSchema = new mongoose.Schema({
   },
 })
 
-module.exports = mongoose.model("Order", orderSchema)
+orderSchema.path("orderEvents").discriminator("proshow", orderedProshowSchema)
+
+const Order = mongoose.model("Order", orderSchema)
+module.exports = { Order }
+// module.exports = orderedProshow
+// module.exports = orderedEvents
