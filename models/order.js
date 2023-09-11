@@ -34,6 +34,14 @@ const orderedProshowSchema = new mongoose.Schema({
   ticketCount: {
     type: Number,
   },
+  dayTwo:[{
+    type:Boolean,
+    default:false
+  }],
+  dayThree:[{
+    type:Boolean,
+    default:false
+  }]
 })
 
 const orderSchema = new mongoose.Schema({
