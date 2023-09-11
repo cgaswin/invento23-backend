@@ -39,6 +39,11 @@ exports.createOrder = BigPromise(async (req, res, next) => {
 
     if (event.type === "proshow") {
       e.ticketCount = event.ticketCount
+
+      //checkin functionality
+      e.day2 = Array(event.ticketCount).fill(false);
+      e.day3 = Array(event.ticketCount).fill(false);
+      
       return e
     }
 
