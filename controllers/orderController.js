@@ -13,6 +13,7 @@ const order = require("../models/order")
 const mongoose = require("mongoose")
 
 exports.createOrder = BigPromise(async (req, res, next) => {
+  req.body.createdAt=new Date.now()
   const {
     name,
     email,
@@ -24,6 +25,7 @@ exports.createOrder = BigPromise(async (req, res, next) => {
     paymentInfo,
     totalAmount,
     ticketsBooked,
+    createdAt
   } = req.body
 
   console.log(orderEvents)
@@ -124,6 +126,7 @@ exports.createOrder = BigPromise(async (req, res, next) => {
       id: result.public_id,
       secure_url: result.secure_url,
     },
+    createdAt
   })
 
   console.log("Order", order)
