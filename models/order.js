@@ -34,14 +34,20 @@ const orderedProshowSchema = new mongoose.Schema({
   ticketCount: {
     type: Number,
   },
-  dayTwo:[{
-    type:Boolean,
-    default:false
-  }],
-  dayThree:[{
-    type:Boolean,
-    default:false
-  }]
+  checkInStatus: [
+    {
+      // Check-in status for each day
+      day: {
+        type: String,
+        enum: ['Day2', 'Day3'],
+        required: true,
+      },
+      checkedIn: {
+        type: Boolean,
+        default: false,
+      },
+    },
+  ],
 })
 
 const orderSchema = new mongoose.Schema({

@@ -40,11 +40,10 @@ exports.createOrder = BigPromise(async (req, res, next) => {
 
     if (event.type === "proshow") {
       e.ticketCount = event.ticketCount
-
-      //checkin functionality
-      e.day2 = Array(event.ticketCount).fill(false);
-      e.day3 = Array(event.ticketCount).fill(false);
-      
+      e.checkInStatus = Array(event.ticketCount).fill({
+        day: event.type === "combo" ? ["Day2", "Day3"] : event.ticketType, // Initialize with the appropriate days or ticket type
+        checkedIn: false, // Set the initial checkedIn status
+      });
       return e
     }
 
@@ -263,6 +262,54 @@ exports.verifyOrder = BigPromise(async (req, res, next) => {
     return next(new CustomError("No order found with this id", 401))
   }
 })
+
+
+exports.checkInOrder = async (req, res, next) => {
+  const { orderId } = req.params;
+  const { checkInStatus } = req.body;
+
+  try {
+    const order = await Order.findById(orderId);
+
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    // Iterate through checkInStatus and update check-in status for each ticket
+    for (let i = 0; i < checkInStatus.length; i++) {
+      const { day, checkedIn } = checkInStatus[i];
+
+      // Find the corresponding ticket in the check-in status array
+      const ticketCheckIn = order.orderEvents[0].checkInStatus[i];
+
+      // Determine the ticket type
+      const ticketType = order.orderEvents[0].type;
+
+      // Update the day and checkedIn properties based on the ticket type
+      if (ticketType === 'combo') {
+        // Handle 'combo' ticket logic here, e.g., updating both 'Day2' and 'Day3' check-ins
+        if (day === 'Day2' || day === 'Day3') {
+          ticketCheckIn.day.push(day);
+          ticketCheckIn.checkedIn = checkedIn;
+        }
+      } else {
+        // Handle other ticket types here
+        ticketCheckIn.day = day;
+        ticketCheckIn.checkedIn = checkedIn;
+      }
+    }
+
+    // Save the updated order with check-in status
+    await order.save();
+
+    res.status(200).json({ message: 'Check-in status updated successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
 
 async function updateEventTicket(eventId) {
   try {
