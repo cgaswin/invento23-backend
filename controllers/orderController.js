@@ -202,6 +202,41 @@ exports.getVerifiedOrders = BigPromise(async (req, res, next) => {
   })
 })
 
+exports.getVerifiedOrdersForAParticularEvent = BigPromise(async (req, res, next) => {
+  try {
+    const id = req.params.id
+    console.log(id)
+
+    // Check if the provided ID is valid (you might want to use a library like `mongoose.Types.ObjectId.isValid`)
+    if (!id) {
+      return res.status(400).json({ message: 'Invalid ID' });
+    }
+
+    // Assuming you have an Event model and you want to find orders associated with a specific event by its ID
+    let event = await Events.findById(id)
+    if (!event) {
+      return res.status(404).json({ message: 'Event not found' });
+    }
+
+    // Find orders that are verified and associated with the event
+    const orders = await Order.find({
+      orderVerified: true,
+      orderEvents: { $elemMatch: { event: id } }
+    }).populate("orderEvents.event");
+
+
+    res.status(200).json({ 
+      count:orders.length,
+      orders
+     });
+  } catch (error) {
+    // Handle any errors that may occur during the process
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
 exports.verifyOrder = BigPromise(async (req, res, next) => {
   const { id } = req.body
   if (!mongoose.Types.ObjectId.isValid(id)) {
