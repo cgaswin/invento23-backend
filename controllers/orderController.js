@@ -37,7 +37,7 @@ exports.createOrder = BigPromise(async (req, res, next) => {
       type: event.type,
       price: event.price,
     }
-
+    return e
   })
 
 
