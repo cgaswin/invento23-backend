@@ -38,17 +38,8 @@ exports.createOrder = BigPromise(async (req, res, next) => {
       price: event.price,
     }
 
-    if (event.type === "proshow") {
-      e.ticketCount = event.ticketCount
-      e.checkInStatus = Array(event.ticketCount).fill({
-        day: event.type === "combo" ? ["Day2", "Day3"] : event.ticketType, // Initialize with the appropriate days or ticket type
-        checkedIn: false, // Set the initial checkedIn status
-      });
-      return e
-    }
-
-    return e
   })
+
 
   const parsedAmount = parseInt(totalAmount)
 
@@ -264,50 +255,53 @@ exports.verifyOrder = BigPromise(async (req, res, next) => {
 })
 
 
-exports.checkInOrder = async (req, res, next) => {
-  const { orderId } = req.params;
-  const { checkInStatus } = req.body;
+exports.checkInOrder = BigPromise(async (req, res, next) => {
+  const { orderId, day } = req.body; // Assuming you send orderId and day in the request body
 
   try {
     const order = await Order.findById(orderId);
 
     if (!order) {
-      return res.status(404).json({ message: 'Order not found' });
+      return res.status(400).json({
+        status: "failed",
+        message: "No order with this id",
+      });
     }
 
-    // Iterate through checkInStatus and update check-in status for each ticket
-    for (let i = 0; i < checkInStatus.length; i++) {
-      const { day, checkedIn } = checkInStatus[i];
-
-      // Find the corresponding ticket in the check-in status array
-      const ticketCheckIn = order.orderEvents[0].checkInStatus[i];
-
-      // Determine the ticket type
-      const ticketType = order.orderEvents[0].type;
-
-      // Update the day and checkedIn properties based on the ticket type
-      if (ticketType === 'combo') {
-        // Handle 'combo' ticket logic here, e.g., updating both 'Day2' and 'Day3' check-ins
-        if (day === 'Day2' || day === 'Day3') {
-          ticketCheckIn.day.push(day);
-          ticketCheckIn.checkedIn = checkedIn;
+    // Assuming day is either "day2" or "day3"
+    if (day === "day2" || day === "day3") {
+      // Update the day2 or day3 array based on the day provided
+      order.orderEvents.forEach((event) => {
+        if (event.type === "proshow") {
+          const index = event.day2.findIndex((value) => value === false);
+          if (index !== -1) {
+            event[day][index] = true;
+          }
         }
-      } else {
-        // Handle other ticket types here
-        ticketCheckIn.day = day;
-        ticketCheckIn.checkedIn = checkedIn;
-      }
+      });
+
+      // Save the updated order
+      await order.save({ validateBeforeSave: false });
+
+      res.status(200).json({
+        status: "success",
+        message: `Check-in for ${day} updated successfully for order ID ${orderId}`,
+      });
+    } else {
+      res.status(400).json({
+        status: "failed",
+        message: "Invalid day provided. Please provide 'day2' or 'day3'",
+      });
     }
-
-    // Save the updated order with check-in status
-    await order.save();
-
-    res.status(200).json({ message: 'Check-in status updated successfully' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({
+      status: "error",
+      message: "Internal server error",
+    });
   }
-};
+});
+
 
 
 

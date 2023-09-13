@@ -34,20 +34,14 @@ const orderedProshowSchema = new mongoose.Schema({
   ticketCount: {
     type: Number,
   },
-  checkInStatus: [
-    {
-      // Check-in status for each day
-      day: {
-        type: String,
-        enum: ['Day2', 'Day3'],
-        required: true,
-      },
-      checkedIn: {
-        type: Boolean,
-        default: false,
-      },
-    },
-  ],
+  dayTwoCheck:{
+    type:Boolean,
+    default:false
+  },
+  dayThreeCheck:{
+    type:Boolean,
+    default:false
+  }
 })
 
 const orderSchema = new mongoose.Schema({
@@ -91,10 +85,6 @@ const orderSchema = new mongoose.Schema({
     type: Number,
     required: [true, "please provide the total amount"],
   },
-  createdAt: {
-    type: Date,
-    default: Date.now(),
-  },
 
   paymentProof: {
     id: {
@@ -104,7 +94,7 @@ const orderSchema = new mongoose.Schema({
       type: String,
     },
   },
-})
+}, { timestamps: true })
 
 orderSchema.path("orderEvents").discriminator("proshow", orderedProshowSchema)
 
