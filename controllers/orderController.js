@@ -38,13 +38,14 @@ exports.createOrder = BigPromise(async (req, res, next) => {
       price: event.price,
     }
 
-    if (event.type === "proshow") {
+    if(event.type === "proshow") {
       e.ticketCount = event.ticketCount
       return e
     }
 
     return e
   })
+
 
   const parsedAmount = parseInt(totalAmount)
 
@@ -258,6 +259,57 @@ exports.verifyOrder = BigPromise(async (req, res, next) => {
     return next(new CustomError("No order found with this id", 401))
   }
 })
+
+
+exports.checkInOrder = BigPromise(async (req, res, next) => {
+  const { orderId, day } = req.body; // Assuming you send orderId and day in the request body
+
+  try {
+    const order = await Order.findById(orderId);
+
+    if (!order) {
+      return res.status(400).json({
+        status: "failed",
+        message: "No order with this id",
+      });
+    }
+
+    // Assuming day is either "day2" or "day3"
+    if (day === "day2" || day === "day3") {
+      // Update the day2 or day3 array based on the day provided
+      order.orderEvents.forEach((event) => {
+        if (event.type === "proshow") {
+          const index = event.day2.findIndex((value) => value === false);
+          if (index !== -1) {
+            event[day][index] = true;
+          }
+        }
+      });
+
+      // Save the updated order
+      await order.save({ validateBeforeSave: false });
+
+      res.status(200).json({
+        status: "success",
+        message: `Check-in for ${day} updated successfully for order ID ${orderId}`,
+      });
+    } else {
+      res.status(400).json({
+        status: "failed",
+        message: "Invalid day provided. Please provide 'day2' or 'day3'",
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      status: "error",
+      message: "Internal server error",
+    });
+  }
+});
+
+
+
 
 async function updateEventTicket(eventId) {
   try {
