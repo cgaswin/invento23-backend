@@ -37,6 +37,12 @@ exports.createOrder = BigPromise(async (req, res, next) => {
       type: event.type,
       price: event.price,
     }
+
+    if(event.type === "proshow") {
+      e.ticketCount = event.ticketCount
+      return e
+    }
+
     return e
   })
 
