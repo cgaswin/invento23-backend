@@ -296,53 +296,43 @@ exports.verifyOrder = BigPromise(async (req, res, next) => {
 })
 
 
-exports.checkInOrder = BigPromise(async (req, res, next) => {
-  const { orderId, day } = req.body; // Assuming you send orderId and day in the request body
+exports.verifyOrderForProshow = BigPromise(async (req, res, next) => {
+  const {orderId,regId,day} = req.body
 
-  try {
-    const order = await Order.findById(orderId);
+  const order = await Order.findById(orderId);
 
-    if (!order) {
-      return res.status(400).json({
-        status: "failed",
-        message: "No order with this id",
-      });
-    }
-
-    // Assuming day is either "day2" or "day3"
-    if (day === "day2" || day === "day3") {
-      // Update the day2 or day3 array based on the day provided
-      order.orderEvents.forEach((event) => {
-        if (event.type === "proshow") {
-          const index = event.day2.findIndex((value) => value === false);
-          if (index !== -1) {
-            event[day][index] = true;
-          }
-        }
-      });
-
-      // Save the updated order
-      await order.save({ validateBeforeSave: false });
-
-      res.status(200).json({
-        status: "success",
-        message: `Check-in for ${day} updated successfully for order ID ${orderId}`,
-      });
-    } else {
-      res.status(400).json({
-        status: "failed",
-        message: "Invalid day provided. Please provide 'day2' or 'day3'",
-      });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      status: "error",
-      message: "Internal server error",
-    });
+  if (!order) {
+    return res.status(404).json({ error: 'Order not found' });
   }
-});
 
+  const eventBooking = order.orderEvents.find(
+    (event) => event._id.toString() === mongoose.Types.ObjectId(regId).toString()
+  );
+
+  if (!eventBooking) {
+    return res.status(404).json({ error: 'Event booking not found in order' });
+  }
+
+  // Check if the event type is 'proshow'
+  if (eventBooking.type === 'proshow') {
+    // Update the check-in status based on the day provided
+    if (day === 'dayTwo') {
+      eventBooking.dayTwoCheck = true;
+    } else if (day === 'dayThree') {
+      eventBooking.dayThreeCheck = true;
+    } else {
+      return res.status(400).json({ error: 'Invalid day parameter' });
+    }
+
+    // Save the updated order
+    await order.save({ validateBeforeSave: false });
+  } else {
+    return res.status(400).json({ error: 'Event is not a proshow' });
+  }
+
+  return res.status(200).json({ message: `Checked in for Proshow on ${day}` });
+
+})
 
 
 
