@@ -298,7 +298,9 @@ exports.verifyOrder = BigPromise(async (req, res, next) => {
 
 exports.verifyOrderForProshow = BigPromise(async (req, res, next) => {
   const {credential} = req.body
+  console.log(credential)
   const { orderId, regId, day } = credential
+  console.log(orderId,regId,day)
 
   console.log(orderId,regId,day)
 
