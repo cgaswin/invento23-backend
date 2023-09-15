@@ -299,15 +299,21 @@ exports.verifyOrder = BigPromise(async (req, res, next) => {
 exports.verifyOrderForProshow = BigPromise(async (req, res, next) => {
   const {orderId,regId,day} = req.body
 
+  console.log(orderId,regId,day)
+
   const order = await Order.findById(orderId);
 
   if (!order) {
     return res.status(404).json({ error: 'Order not found' });
   }
 
+  console.log(order);
+
   const eventBooking = order.orderEvents.find(
     (event) => event._id.toString() === new mongoose.Types.ObjectId(regId).toString()
   );
+
+  console.log(eventBooking)
 
   if (!eventBooking) {
     return res.status(404).json({ error: 'Event booking not found in order' });
