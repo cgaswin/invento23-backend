@@ -306,7 +306,7 @@ exports.verifyOrderForProshow = BigPromise(async (req, res, next) => {
   }
 
   const eventBooking = order.orderEvents.find(
-    (event) => event._id.toString() === mongoose.Types.ObjectId(regId).toString()
+    (event) => event._id.toString() === new mongoose.Types.ObjectId(regId).toString()
   );
 
   if (!eventBooking) {
